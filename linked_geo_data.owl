@@ -1,0 +1,637 @@
+@prefix : <http://www.example.com/linkedGDDS#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.example.com/linkedGDDS> .
+
+<http://www.example.com/linkedGDDS> rdf:type owl:Ontology .
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://www.example.com/linkedGDDS#containsCoverage
+
+:containsCoverage rdf:type owl:ObjectProperty ,
+                           owl:AsymmetricProperty ,
+                           owl:IrreflexiveProperty ;
+                  
+                  rdfs:domain :CoverageCollection ;
+                  
+                  rdfs:range :Coverage .
+
+
+
+###  http://www.example.com/linkedGDDS#containsParameter
+
+:containsParameter rdf:type owl:ObjectProperty ,
+                            owl:AsymmetricProperty ,
+                            owl:IrreflexiveProperty ;
+                   
+                   rdfs:domain :ParameterGroup ;
+                   
+                   rdfs:range :Parameter .
+
+
+
+###  http://www.example.com/linkedGDDS#hasAxis
+
+:hasAxis rdf:type owl:ObjectProperty ,
+                  owl:AsymmetricProperty ,
+                  owl:IrreflexiveProperty ;
+         
+         rdfs:domain :Domain ;
+         
+         rdfs:range :Axis .
+
+
+
+###  http://www.example.com/linkedGDDS#hasDataType
+
+:hasDataType rdf:type owl:ObjectProperty ,
+                      owl:FunctionalProperty ,
+                      owl:AsymmetricProperty ,
+                      owl:IrreflexiveProperty ;
+             
+             rdfs:domain :Range ;
+             
+             rdfs:range :RangeDataType ;
+             
+             rdfs:comment "Specifies the data type in the values array" .
+
+
+
+###  http://www.example.com/linkedGDDS#hasDomain
+
+:hasDomain rdf:type owl:ObjectProperty ,
+                    owl:FunctionalProperty ,
+                    owl:AsymmetricProperty ,
+                    owl:IrreflexiveProperty ;
+           
+           rdfs:domain :Coverage ;
+           
+           rdfs:range :Domain .
+
+
+
+###  http://www.example.com/linkedGDDS#hasParameter
+
+:hasParameter rdf:type owl:ObjectProperty ,
+                       owl:FunctionalProperty ,
+                       owl:AsymmetricProperty ,
+                       owl:IrreflexiveProperty ;
+              
+              rdfs:domain :Coverage ;
+              
+              rdfs:range :Parameter .
+
+
+
+###  http://www.example.com/linkedGDDS#hasRange
+
+:hasRange rdf:type owl:ObjectProperty ,
+                   owl:FunctionalProperty ,
+                   owl:AsymmetricProperty ,
+                   owl:IrreflexiveProperty ;
+          
+          rdfs:domain :Coverage ;
+          
+          rdfs:range :Range .
+
+
+
+###  http://www.example.com/linkedGDDS#usesReferenceSystem
+
+:usesReferenceSystem rdf:type owl:ObjectProperty ,
+                              owl:FunctionalProperty ,
+                              owl:AsymmetricProperty ,
+                              owl:IrreflexiveProperty ;
+                     
+                     rdfs:domain :Axis ;
+                     
+                     rdfs:range :ReferenceSystem .
+
+
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+###  http://www.example.com/linkedGDDS#axisNum
+
+:axisNum rdf:type owl:DatatypeProperty ,
+                  owl:FunctionalProperty ;
+         
+         rdfs:domain :Axis ;
+         
+         rdfs:range xsd:positiveInteger ;
+         
+         rdfs:comment "The number of coordinates on an axis. For RangeAxes these are equally spaced from Start to Stop" .
+
+
+
+###  http://www.example.com/linkedGDDS#axisStart
+
+:axisStart rdf:type owl:DatatypeProperty ,
+                    owl:FunctionalProperty ;
+           
+           rdfs:domain :RangeAxis ;
+           
+           rdfs:range xsd:double ;
+           
+           rdfs:comment "The first coordinate of a RangeAxis" .
+
+
+
+###  http://www.example.com/linkedGDDS#axisStop
+
+:axisStop rdf:type owl:DatatypeProperty ,
+                   owl:FunctionalProperty ;
+          
+          rdfs:domain :RangeAxis ;
+          
+          rdfs:range xsd:double ;
+          
+          rdfs:comment "The last coordinate of a RangeAxis" .
+
+
+
+###  http://www.example.com/linkedGDDS#axisValues
+
+:axisValues rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            
+            rdfs:domain :CategoricalAxis ;
+            
+            rdfs:range rdf:PlainLiteral ;
+            
+            rdfs:comment "A list of allowable values for a categorical axis (e.g. [\"station 1\", \"station 2\", \"station 3\"])" .
+
+
+
+###  http://www.example.com/linkedGDDS#rangeAxisOrder
+
+:rangeAxisOrder rdf:type owl:DatatypeProperty ,
+                         owl:FunctionalProperty ;
+                
+                rdfs:domain :Domain ;
+                
+                rdfs:range rdf:PlainLiteral ;
+                
+                rdfs:comment "An array specifying the order of the axes" .
+
+
+
+###  http://www.example.com/linkedGDDS#rangeValues
+
+:rangeValues rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
+             
+             rdfs:domain :Range ;
+             
+             rdfs:range rdf:PlainLiteral ;
+             
+             rdfs:comment "The array of values in a Range" .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://www.example.com/linkedGDDS#Axis
+
+:Axis rdf:type owl:Class ;
+      
+      rdfs:subClassOf [ rdf:type owl:Restriction ;
+                        owl:onProperty :usesReferenceSystem ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :ReferenceSystem
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :axisNum ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:positiveInteger
+                      ] ;
+      
+      rdfs:comment "A method for indexing data" .
+
+
+
+###  http://www.example.com/linkedGDDS#CategoricalAxis
+
+:CategoricalAxis rdf:type owl:Class ;
+                 
+                 rdfs:subClassOf :Axis ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :axisValues ;
+                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:onDataRange rdf:PlainLiteral
+                                 ] ;
+                 
+                 owl:disjointWith :RangeAxis ;
+                 
+                 rdfs:comment "A coordinate defined by a set of allowable values e.g. \"station 1, station 2, station 3\"" .
+
+
+
+###  http://www.example.com/linkedGDDS#Coverage
+
+:Coverage rdf:type owl:Class ;
+          
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasDomain ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :Domain
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasRange ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :Range
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasParameter ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :Parameter
+                          ] ;
+          
+          rdfs:comment "A single, coherent chunk of data" .
+
+
+
+###  http://www.example.com/linkedGDDS#CoverageCollection
+
+:CoverageCollection rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                      owl:onProperty :containsCoverage ;
+                                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Coverage
+                                    ] ;
+                    
+                    rdfs:comment "A collection of related coverages defined in a single location" .
+
+
+
+###  http://www.example.com/linkedGDDS#Domain
+
+:Domain rdf:type owl:Class ;
+        
+        rdfs:subClassOf [ rdf:type owl:Class ;
+                          owl:unionOf ( [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty :hasAxis ;
+                                                                 owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                                                 owl:onClass :Axis
+                                                               ]
+                                                               [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty :rangeAxisOrder ;
+                                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                 owl:onDataRange rdf:PlainLiteral
+                                                               ]
+                                                             ) ;
+                                          rdf:type owl:Class
+                                        ]
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :hasAxis ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass :Axis
+                                        ]
+                                      )
+                        ] ;
+        
+        rdfs:comment "Specifies the coordinate system for a coverage" .
+
+
+
+###  http://www.example.com/linkedGDDS#GridDomain
+
+:GridDomain rdf:type owl:Class ;
+            
+            rdfs:subClassOf :Domain ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasAxis ;
+                              owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                              owl:onClass :SpatialAxis
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasAxis ;
+                              owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                              owl:onClass [ rdf:type owl:Class ;
+                                            owl:complementOf [ rdf:type owl:Class ;
+                                                               owl:unionOf ( :SpatialAxis
+                                                                             :TemporalAxis
+                                                                           )
+                                                             ]
+                                          ]
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasAxis ;
+                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :TemporalAxis
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasAxis ;
+                              owl:maxQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+                              owl:onClass :SpatialAxis
+                            ] ;
+            
+            rdfs:comment "Most basic kind of domain. Represents a 2D, 3D or 4D grid of values. Requires 2-3 spatial axes and 0-1 temporal axes" .
+
+
+
+###  http://www.example.com/linkedGDDS#MultiPolygonDomain
+
+:MultiPolygonDomain rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf :Domain ;
+                    
+                    rdfs:comment "TODO" .
+
+
+
+###  http://www.example.com/linkedGDDS#MultiPolygonSeriesDomain
+
+:MultiPolygonSeriesDomain rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Domain ;
+                          
+                          rdfs:comment "TODO" .
+
+
+
+###  http://www.example.com/linkedGDDS#Parameter
+
+:Parameter rdf:type owl:Class ;
+           
+           rdfs:comment "Adds metadata about the values in a coverage" .
+
+
+
+###  http://www.example.com/linkedGDDS#ParameterGroup
+
+:ParameterGroup rdf:type owl:Class ;
+                
+                rdfs:subClassOf :Parameter ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :containsParameter ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :Parameter
+                                ] ;
+                
+                rdfs:comment "Combines several parameter values into a single one for e.g. vector values or measurement + uncertainty values" .
+
+
+
+###  http://www.example.com/linkedGDDS#PointDomain
+
+:PointDomain rdf:type owl:Class ;
+             
+             rdfs:subClassOf :Domain ;
+             
+             rdfs:comment "TODO" .
+
+
+
+###  http://www.example.com/linkedGDDS#PointSeriesDomain
+
+:PointSeriesDomain rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :Domain ;
+                   
+                   rdfs:comment "TODO" .
+
+
+
+###  http://www.example.com/linkedGDDS#PolygonAxis
+
+:PolygonAxis rdf:type owl:Class ;
+             
+             rdfs:subClassOf :CategoricalAxis ;
+             
+             owl:disjointWith :TupleAxis ;
+             
+             rdfs:comment "TODO: this will allow each \"coordinate\" to be a polygon" .
+
+
+
+###  http://www.example.com/linkedGDDS#PolygonDomain
+
+:PolygonDomain rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Domain ;
+               
+               rdfs:comment "TODO" .
+
+
+
+###  http://www.example.com/linkedGDDS#PolygonSeriesDomain
+
+:PolygonSeriesDomain rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :Domain ;
+                     
+                     rdfs:comment "TODO" .
+
+
+
+###  http://www.example.com/linkedGDDS#Range
+
+:Range rdf:type owl:Class ;
+       
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasDataType ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass :RangeDataType
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :rangeValues ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange rdf:PlainLiteral
+                       ] ;
+       
+       rdfs:comment "Stores the actual data as an array in an rdf:PlainLiteral" .
+
+
+
+###  http://www.example.com/linkedGDDS#RangeAxis
+
+:RangeAxis rdf:type owl:Class ;
+           
+           rdfs:subClassOf :Axis ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :axisStart ;
+                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:double
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :axisStop ;
+                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:double
+                           ] ;
+           
+           rdfs:comment "A coordinate defined by a beginning, end, and number of values" .
+
+
+
+###  http://www.example.com/linkedGDDS#RangeDataType
+
+:RangeDataType rdf:type owl:Class ;
+               
+               rdfs:comment "The allowed data types from CoverageJSON" .
+
+
+
+###  http://www.example.com/linkedGDDS#ReferenceSystem
+
+:ReferenceSystem rdf:type owl:Class ;
+                 
+                 rdfs:comment "Links an Axis definition to an external standard for measuring the coordinate (e.g. spatial standards, time standards)" .
+
+
+
+###  http://www.example.com/linkedGDDS#SectionDomain
+
+:SectionDomain rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Domain ;
+               
+               rdfs:comment "TODO" .
+
+
+
+###  http://www.example.com/linkedGDDS#SpatialAxis
+
+:SpatialAxis rdf:type owl:Class ;
+             
+             rdfs:subClassOf :RangeAxis ;
+             
+             owl:disjointWith :TemporalAxis .
+
+
+
+###  http://www.example.com/linkedGDDS#TemporalAxis
+
+:TemporalAxis rdf:type owl:Class ;
+              
+              rdfs:subClassOf :RangeAxis .
+
+
+
+###  http://www.example.com/linkedGDDS#TrajectoryDomain
+
+:TrajectoryDomain rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Domain ;
+                  
+                  rdfs:comment "TODO" .
+
+
+
+###  http://www.example.com/linkedGDDS#TupleAxis
+
+:TupleAxis rdf:type owl:Class ;
+           
+           rdfs:subClassOf :CategoricalAxis ;
+           
+           rdfs:comment "TODO: this will allow each coordinate to be a tuple - useful for e.g. recording a set of measurements by a moving station" .
+
+
+
+###  http://www.example.com/linkedGDDS#VerticalProfileDomain
+
+:VerticalProfileDomain rdf:type owl:Class ;
+                       
+                       rdfs:subClassOf :Domain ;
+                       
+                       rdfs:comment "TODO" .
+
+
+
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://www.example.com/linkedGDDS#FloatDataType
+
+:FloatDataType rdf:type owl:NamedIndividual ,
+                        :RangeDataType .
+
+
+
+###  http://www.example.com/linkedGDDS#IntegerDataType
+
+:IntegerDataType rdf:type owl:NamedIndividual ,
+                          :RangeDataType .
+
+
+
+###  http://www.example.com/linkedGDDS#StringDataType
+
+:StringDataType rdf:type owl:NamedIndividual ,
+                         :RangeDataType .
+
+
+
+
+
+#################################################################
+#
+#    General axioms
+#
+#################################################################
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Axis
+                :Coverage
+                :CoverageCollection
+                :Domain
+                :Parameter
+                :Range
+                :RangeDataType
+                :ReferenceSystem
+              )
+] .
+
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :GridDomain
+                :MultiPolygonDomain
+                :MultiPolygonSeriesDomain
+                :PointDomain
+                :PointSeriesDomain
+                :PolygonDomain
+                :PolygonSeriesDomain
+                :SectionDomain
+                :TrajectoryDomain
+                :VerticalProfileDomain
+              )
+] .
+
+
+
+
+###  Generated by the OWL API (version 4.1.3.20151118-2017) https://github.com/owlcs/owlapi
+
