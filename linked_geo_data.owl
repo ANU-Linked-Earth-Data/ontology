@@ -370,31 +370,185 @@ _:genid31 a rdf:List ;
 	rdf:first "[\"z\",\"y\",\"x\"]" ;
 	rdf:rest rdf:nil .
 
-:GridDomain rdfs:comment "Most basic kind of domain. Represents a 2D, 3D or 4D grid of values. Requires 2-3 spatial axes and 0-1 temporal axes" .
+:GridDomain rdfs:comment "Most basic kind of domain. Represents a 2D, 3D or 4D grid of values. Requires 2-3 spatial axes and 0-1 temporal axes" , "TODO: could tie the rangeAxisOrder to the particular axes chosen" .
 # 
 # http://www.example.com/linkedGDDS#MultiPointDomain
 
 :MultiPointDomain a owl:Class ;
-	rdfs:subClassOf :Domain ;
-	rdfs:comment "TODO" .
+	rdfs:subClassOf :Domain , _:genid35 .
+
+_:genid35 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :TemporalValue .
+
+:MultiPointDomain owl:disjointUnionOf _:genid37 .
+
+_:genid37 a rdf:List ;
+	rdf:first :xyMultiPointDomain ;
+	rdf:rest _:genid36 .
+
+_:genid36 a rdf:List ;
+	rdf:first :xyzMultiPointDomain ;
+	rdf:rest rdf:nil .
+
+:MultiPointDomain rdfs:comment "Represents a group of measurements at scattered points all taken at the same time" .
 # 
 # http://www.example.com/linkedGDDS#MultiPointSeriesDomain
 
 :MultiPointSeriesDomain a owl:Class ;
-	rdfs:subClassOf :Domain ;
-	rdfs:comment "TODO" .
+	rdfs:subClassOf :Domain , _:genid38 .
+
+_:genid38 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :TemporalAxis .
+
+:MultiPointSeriesDomain rdfs:subClassOf _:genid39 .
+
+_:genid39 a owl:Restriction ;
+	owl:onProperty :rangeAxisOrder ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onDataRange _:genid40 .
+
+_:genid40 a rdfs:Datatype ;
+	owl:oneOf _:genid41 .
+
+_:genid41 a rdf:List ;
+	rdf:first "[\"t\",\"composite\"]" ;
+	rdf:rest rdf:nil .
+
+:MultiPointSeriesDomain owl:disjointUnionOf _:genid43 .
+
+_:genid43 a rdf:List ;
+	rdf:first :xyMultiPointSeriesDomain ;
+	rdf:rest _:genid42 .
+
+_:genid42 a rdf:List ;
+	rdf:first :xyzMultiPointSeriesDomain ;
+	rdf:rest rdf:nil .
+
+:MultiPointSeriesDomain rdfs:comment "Represents measurements at scattered points taken repeatedly at a series of times" .
 # 
 # http://www.example.com/linkedGDDS#MultiPolygonDomain
 
 :MultiPolygonDomain a owl:Class ;
-	rdfs:subClassOf :Domain ;
-	rdfs:comment "TODO" .
+	rdfs:subClassOf :Domain , _:genid44 .
+
+_:genid44 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+	owl:onClass _:genid45 .
+
+_:genid45 a owl:Class ;
+	owl:complementOf _:genid46 .
+
+_:genid46 a owl:Class ;
+	owl:unionOf _:genid49 .
+
+_:genid49 a rdf:List ;
+	rdf:first :PolygonAxis ;
+	rdf:rest _:genid48 .
+
+_:genid48 a rdf:List ;
+	rdf:first :TemporalValue ;
+	rdf:rest _:genid47 .
+
+_:genid47 a rdf:List ;
+	rdf:first :zValue ;
+	rdf:rest rdf:nil .
+
+:MultiPolygonDomain rdfs:subClassOf _:genid50 .
+
+_:genid50 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :PolygonAxis .
+
+:MultiPolygonDomain rdfs:subClassOf _:genid51 .
+
+_:genid51 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :TemporalValue .
+
+:MultiPolygonDomain rdfs:subClassOf _:genid52 .
+
+_:genid52 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :zValue .
+
+:MultiPolygonDomain rdfs:comment "A group of (horizontal) polygons at the same point in time. One measurement per polygon." .
 # 
 # http://www.example.com/linkedGDDS#MultiPolygonSeriesDomain
 
 :MultiPolygonSeriesDomain a owl:Class ;
-	rdfs:subClassOf :Domain ;
-	rdfs:comment "TODO" .
+	rdfs:subClassOf :Domain , _:genid53 .
+
+_:genid53 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+	owl:onClass _:genid54 .
+
+_:genid54 a owl:Class ;
+	owl:complementOf _:genid55 .
+
+_:genid55 a owl:Class ;
+	owl:unionOf _:genid58 .
+
+_:genid58 a rdf:List ;
+	rdf:first :PolygonAxis ;
+	rdf:rest _:genid57 .
+
+_:genid57 a rdf:List ;
+	rdf:first :TemporalAxis ;
+	rdf:rest _:genid56 .
+
+_:genid56 a rdf:List ;
+	rdf:first :zValue ;
+	rdf:rest rdf:nil .
+
+:MultiPolygonSeriesDomain rdfs:subClassOf _:genid59 .
+
+_:genid59 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :PolygonAxis .
+
+:MultiPolygonSeriesDomain rdfs:subClassOf _:genid60 .
+
+_:genid60 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :TemporalAxis .
+
+:MultiPolygonSeriesDomain rdfs:subClassOf _:genid61 .
+
+_:genid61 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :zValue .
+
+:MultiPolygonSeriesDomain rdfs:subClassOf _:genid62 .
+
+_:genid62 a owl:Restriction ;
+	owl:onProperty :rangeAxisOrder ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onDataRange _:genid63 .
+
+_:genid63 a rdfs:Datatype ;
+	owl:oneOf _:genid65 .
+
+_:genid65 a rdf:List ;
+	rdf:first "[\"t\",\"composite\"]" ;
+	rdf:rest _:genid64 .
+
+_:genid64 a rdf:List ;
+	rdf:first "[\"t\",\"z\",\"composite\"]" ;
+	rdf:rest rdf:nil .
+
+:MultiPolygonSeriesDomain rdfs:comment "A group of (horizontal) polygons measured at each of a series of time points. One measurement per polygon per time point." , "TODO: could tie the rangeAxisOrder to the particular axes chosen" .
 # 
 # http://www.example.com/linkedGDDS#Parameter
 
@@ -404,9 +558,9 @@ _:genid31 a rdf:List ;
 # http://www.example.com/linkedGDDS#ParameterGroup
 
 :ParameterGroup a owl:Class ;
-	rdfs:subClassOf :Parameter , _:genid35 .
+	rdfs:subClassOf :Parameter , _:genid66 .
 
-_:genid35 a owl:Restriction ;
+_:genid66 a owl:Restriction ;
 	owl:onProperty :containsParameter ;
 	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Parameter .
@@ -416,51 +570,51 @@ _:genid35 a owl:Restriction ;
 # http://www.example.com/linkedGDDS#PointDomain
 
 :PointDomain a owl:Class ;
-	rdfs:subClassOf :Domain , _:genid36 .
+	rdfs:subClassOf :Domain , _:genid67 .
 
-_:genid36 a owl:Restriction ;
+_:genid67 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-	owl:onClass _:genid37 .
+	owl:onClass _:genid68 .
 
-_:genid37 a owl:Class ;
-	owl:complementOf _:genid38 .
+_:genid68 a owl:Class ;
+	owl:complementOf _:genid69 .
 
-_:genid38 a owl:Class ;
-	owl:unionOf _:genid40 .
+_:genid69 a owl:Class ;
+	owl:unionOf _:genid71 .
 
-_:genid40 a rdf:List ;
+_:genid71 a rdf:List ;
 	rdf:first :SpatialValue ;
-	rdf:rest _:genid39 .
+	rdf:rest _:genid70 .
 
-_:genid39 a rdf:List ;
+_:genid70 a rdf:List ;
 	rdf:first :TemporalValue ;
 	rdf:rest rdf:nil .
 
-:PointDomain rdfs:subClassOf _:genid41 .
+:PointDomain rdfs:subClassOf _:genid72 .
 
-_:genid41 a owl:Restriction ;
+_:genid72 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :xValue .
 
-:PointDomain rdfs:subClassOf _:genid42 .
+:PointDomain rdfs:subClassOf _:genid73 .
 
-_:genid42 a owl:Restriction ;
+_:genid73 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :yValue .
 
-:PointDomain rdfs:subClassOf _:genid43 .
+:PointDomain rdfs:subClassOf _:genid74 .
 
-_:genid43 a owl:Restriction ;
+_:genid74 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :TemporalValue .
 
-:PointDomain rdfs:subClassOf _:genid44 .
+:PointDomain rdfs:subClassOf _:genid75 .
 
-_:genid44 a owl:Restriction ;
+_:genid75 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :zValue .
@@ -470,51 +624,51 @@ _:genid44 a owl:Restriction ;
 # http://www.example.com/linkedGDDS#PointSeriesDomain
 
 :PointSeriesDomain a owl:Class ;
-	rdfs:subClassOf :Domain , _:genid45 .
+	rdfs:subClassOf :Domain , _:genid76 .
 
-_:genid45 a owl:Restriction ;
+_:genid76 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-	owl:onClass _:genid46 .
+	owl:onClass _:genid77 .
 
-_:genid46 a owl:Class ;
-	owl:complementOf _:genid47 .
+_:genid77 a owl:Class ;
+	owl:complementOf _:genid78 .
 
-_:genid47 a owl:Class ;
-	owl:unionOf _:genid49 .
+_:genid78 a owl:Class ;
+	owl:unionOf _:genid80 .
 
-_:genid49 a rdf:List ;
+_:genid80 a rdf:List ;
 	rdf:first :SpatialValue ;
-	rdf:rest _:genid48 .
+	rdf:rest _:genid79 .
 
-_:genid48 a rdf:List ;
+_:genid79 a rdf:List ;
 	rdf:first :TemporalAxis ;
 	rdf:rest rdf:nil .
 
-:PointSeriesDomain rdfs:subClassOf _:genid50 .
+:PointSeriesDomain rdfs:subClassOf _:genid81 .
 
-_:genid50 a owl:Restriction ;
+_:genid81 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :TemporalAxis .
 
-:PointSeriesDomain rdfs:subClassOf _:genid51 .
+:PointSeriesDomain rdfs:subClassOf _:genid82 .
 
-_:genid51 a owl:Restriction ;
+_:genid82 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :xValue .
 
-:PointSeriesDomain rdfs:subClassOf _:genid52 .
+:PointSeriesDomain rdfs:subClassOf _:genid83 .
 
-_:genid52 a owl:Restriction ;
+_:genid83 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :yValue .
 
-:PointSeriesDomain rdfs:subClassOf _:genid53 .
+:PointSeriesDomain rdfs:subClassOf _:genid84 .
 
-_:genid53 a owl:Restriction ;
+_:genid84 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :zValue .
@@ -531,14 +685,104 @@ _:genid53 a owl:Restriction ;
 # http://www.example.com/linkedGDDS#PolygonDomain
 
 :PolygonDomain a owl:Class ;
-	rdfs:subClassOf :Domain ;
-	rdfs:comment "TODO" .
+	rdfs:subClassOf :Domain , _:genid85 .
+
+_:genid85 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+	owl:onClass _:genid86 .
+
+_:genid86 a owl:Class ;
+	owl:complementOf _:genid87 .
+
+_:genid87 a owl:Class ;
+	owl:unionOf _:genid90 .
+
+_:genid90 a rdf:List ;
+	rdf:first :PolygonValue ;
+	rdf:rest _:genid89 .
+
+_:genid89 a rdf:List ;
+	rdf:first :TemporalValue ;
+	rdf:rest _:genid88 .
+
+_:genid88 a rdf:List ;
+	rdf:first :zValue ;
+	rdf:rest rdf:nil .
+
+:PolygonDomain rdfs:subClassOf _:genid91 .
+
+_:genid91 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :PolygonValue .
+
+:PolygonDomain rdfs:subClassOf _:genid92 .
+
+_:genid92 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :TemporalValue .
+
+:PolygonDomain rdfs:subClassOf _:genid93 .
+
+_:genid93 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :zValue .
+
+:PolygonDomain rdfs:comment "Represents a single (horizontal) polygon at a fixed height and time" .
 # 
 # http://www.example.com/linkedGDDS#PolygonSeriesDomain
 
 :PolygonSeriesDomain a owl:Class ;
-	rdfs:subClassOf :Domain ;
-	rdfs:comment "TODO" .
+	rdfs:subClassOf :Domain , _:genid94 .
+
+_:genid94 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+	owl:onClass _:genid95 .
+
+_:genid95 a owl:Class ;
+	owl:complementOf _:genid96 .
+
+_:genid96 a owl:Class ;
+	owl:unionOf _:genid99 .
+
+_:genid99 a rdf:List ;
+	rdf:first :PolygonValue ;
+	rdf:rest _:genid98 .
+
+_:genid98 a rdf:List ;
+	rdf:first :TemporalAxis ;
+	rdf:rest _:genid97 .
+
+_:genid97 a rdf:List ;
+	rdf:first :zValue ;
+	rdf:rest rdf:nil .
+
+:PolygonSeriesDomain rdfs:subClassOf _:genid100 .
+
+_:genid100 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :PolygonValue .
+
+:PolygonSeriesDomain rdfs:subClassOf _:genid101 .
+
+_:genid101 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :TemporalAxis .
+
+:PolygonSeriesDomain rdfs:subClassOf _:genid102 .
+
+_:genid102 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :zValue .
+
+:PolygonSeriesDomain rdfs:comment "Represents measurements taken from the same polygon at a series of times" .
 # 
 # http://www.example.com/linkedGDDS#PolygonValue
 
@@ -549,16 +793,16 @@ _:genid53 a owl:Restriction ;
 # http://www.example.com/linkedGDDS#Range
 
 :Range a owl:Class ;
-	rdfs:subClassOf _:genid54 .
+	rdfs:subClassOf _:genid103 .
 
-_:genid54 a owl:Restriction ;
+_:genid103 a owl:Restriction ;
 	owl:onProperty :hasDataType ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :RangeDataType .
 
-:Range rdfs:subClassOf _:genid55 .
+:Range rdfs:subClassOf _:genid104 .
 
-_:genid55 a owl:Restriction ;
+_:genid104 a owl:Restriction ;
 	owl:onProperty :rangeValues ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onDataRange rdf:PlainLiteral .
@@ -569,16 +813,16 @@ _:genid55 a owl:Restriction ;
 # http://www.example.com/linkedGDDS#RangeAxis
 
 :RangeAxis a owl:Class ;
-	rdfs:subClassOf :Axis , _:genid56 .
+	rdfs:subClassOf :Axis , _:genid105 .
 
-_:genid56 a owl:Restriction ;
+_:genid105 a owl:Restriction ;
 	owl:onProperty :axisStart ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onDataRange xsd:double .
 
-:RangeAxis rdfs:subClassOf _:genid57 .
+:RangeAxis rdfs:subClassOf _:genid106 .
 
-_:genid57 a owl:Restriction ;
+_:genid106 a owl:Restriction ;
 	owl:onProperty :axisStop ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onDataRange xsd:double .
@@ -598,52 +842,52 @@ _:genid57 a owl:Restriction ;
 # http://www.example.com/linkedGDDS#SectionDomain
 
 :SectionDomain a owl:Class ;
-	rdfs:subClassOf :Domain , _:genid58 .
+	rdfs:subClassOf :Domain , _:genid107 .
 
-_:genid58 a owl:Restriction ;
+_:genid107 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-	owl:onClass _:genid59 .
+	owl:onClass _:genid108 .
 
-_:genid59 a owl:Class ;
-	owl:complementOf _:genid60 .
+_:genid108 a owl:Class ;
+	owl:complementOf _:genid109 .
 
-_:genid60 a owl:Class ;
-	owl:unionOf _:genid62 .
+_:genid109 a owl:Class ;
+	owl:unionOf _:genid111 .
 
-_:genid62 a rdf:List ;
+_:genid111 a rdf:List ;
 	rdf:first :txyTupleAxis ;
-	rdf:rest _:genid61 .
+	rdf:rest _:genid110 .
 
-_:genid61 a rdf:List ;
+_:genid110 a rdf:List ;
 	rdf:first :zAxis ;
 	rdf:rest rdf:nil .
 
-:SectionDomain rdfs:subClassOf _:genid63 .
+:SectionDomain rdfs:subClassOf _:genid112 .
 
-_:genid63 a owl:Restriction ;
+_:genid112 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :txyTupleAxis .
 
-:SectionDomain rdfs:subClassOf _:genid64 .
+:SectionDomain rdfs:subClassOf _:genid113 .
 
-_:genid64 a owl:Restriction ;
+_:genid113 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :zAxis .
 
-:SectionDomain rdfs:subClassOf _:genid65 .
+:SectionDomain rdfs:subClassOf _:genid114 .
 
-_:genid65 a owl:Restriction ;
+_:genid114 a owl:Restriction ;
 	owl:onProperty :rangeAxisOrder ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onDataRange _:genid66 .
+	owl:onDataRange _:genid115 .
 
-_:genid66 a rdfs:Datatype ;
-	owl:oneOf _:genid67 .
+_:genid115 a rdfs:Datatype ;
+	owl:oneOf _:genid116 .
 
-_:genid67 a rdf:List ;
+_:genid116 a rdf:List ;
 	rdf:first "[\"z\",\"composite\"]" ;
 	rdf:rest rdf:nil .
 
@@ -653,23 +897,23 @@ _:genid67 a rdf:List ;
 # http://www.example.com/linkedGDDS#SingleValueAxis
 
 :SingleValueAxis a owl:Class ;
-	rdfs:subClassOf :Axis , _:genid68 .
+	rdfs:subClassOf :Axis , _:genid117 .
 
-_:genid68 a owl:Restriction ;
+_:genid117 a owl:Restriction ;
 	owl:onProperty :axisSize ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onDataRange _:genid69 .
+	owl:onDataRange _:genid118 .
 
-_:genid69 a rdfs:Datatype ;
-	owl:oneOf _:genid70 .
+_:genid118 a rdfs:Datatype ;
+	owl:oneOf _:genid119 .
 
-_:genid70 a rdf:List ;
+_:genid119 a rdf:List ;
 	rdf:first "1"^^xsd:positiveInteger ;
 	rdf:rest rdf:nil .
 
-:SingleValueAxis rdfs:subClassOf _:genid71 .
+:SingleValueAxis rdfs:subClassOf _:genid120 .
 
-_:genid71 a owl:Restriction ;
+_:genid120 a owl:Restriction ;
 	owl:onProperty :axisValue ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onDataRange xsd:double .
@@ -681,17 +925,17 @@ _:genid71 a owl:Restriction ;
 :SpatialAxis a owl:Class ;
 	rdfs:subClassOf :RangeAxis ;
 	owl:disjointWith :TemporalAxis ;
-	owl:disjointUnionOf _:genid74 .
+	owl:disjointUnionOf _:genid123 .
 
-_:genid74 a rdf:List ;
+_:genid123 a rdf:List ;
 	rdf:first :xAxis ;
-	rdf:rest _:genid73 .
+	rdf:rest _:genid122 .
 
-_:genid73 a rdf:List ;
+_:genid122 a rdf:List ;
 	rdf:first :yAxis ;
-	rdf:rest _:genid72 .
+	rdf:rest _:genid121 .
 
-_:genid72 a rdf:List ;
+_:genid121 a rdf:List ;
 	rdf:first :zAxis ;
 	rdf:rest rdf:nil .
 
@@ -701,17 +945,17 @@ _:genid72 a rdf:List ;
 
 :SpatialValue a owl:Class ;
 	rdfs:subClassOf :SingleValueAxis ;
-	owl:disjointUnionOf _:genid77 .
+	owl:disjointUnionOf _:genid126 .
 
-_:genid77 a rdf:List ;
+_:genid126 a rdf:List ;
 	rdf:first :xValue ;
-	rdf:rest _:genid76 .
+	rdf:rest _:genid125 .
 
-_:genid76 a rdf:List ;
+_:genid125 a rdf:List ;
 	rdf:first :yValue ;
-	rdf:rest _:genid75 .
+	rdf:rest _:genid124 .
 
-_:genid75 a rdf:List ;
+_:genid124 a rdf:List ;
 	rdf:first :zValue ;
 	rdf:rest rdf:nil .
 
@@ -733,13 +977,13 @@ _:genid75 a rdf:List ;
 
 :TrajectoryDomain a owl:Class ;
 	rdfs:subClassOf :Domain ;
-	owl:disjointUnionOf _:genid79 .
+	owl:disjointUnionOf _:genid128 .
 
-_:genid79 a rdf:List ;
+_:genid128 a rdf:List ;
 	rdf:first :txyTrajectoryDomain ;
-	rdf:rest _:genid78 .
+	rdf:rest _:genid127 .
 
-_:genid78 a rdf:List ;
+_:genid127 a rdf:List ;
 	rdf:first :txyzTrajectoryDomain ;
 	rdf:rest rdf:nil .
 
@@ -749,9 +993,9 @@ _:genid78 a rdf:List ;
 # http://www.example.com/linkedGDDS#TupleAxis
 
 :TupleAxis a owl:Class ;
-	rdfs:subClassOf :CategoricalAxis , _:genid80 .
+	rdfs:subClassOf :CategoricalAxis , _:genid129 .
 
-_:genid80 a owl:Restriction ;
+_:genid129 a owl:Restriction ;
 	owl:onProperty :tupleComponents ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onDataRange rdf:PlainLiteral .
@@ -761,59 +1005,59 @@ _:genid80 a owl:Restriction ;
 # http://www.example.com/linkedGDDS#VerticalProfileDomain
 
 :VerticalProfileDomain a owl:Class ;
-	rdfs:subClassOf :Domain , _:genid81 .
+	rdfs:subClassOf :Domain , _:genid130 .
 
-_:genid81 a owl:Restriction ;
+_:genid130 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-	owl:onClass _:genid82 .
+	owl:onClass _:genid131 .
 
-_:genid82 a owl:Class ;
-	owl:complementOf _:genid83 .
+_:genid131 a owl:Class ;
+	owl:complementOf _:genid132 .
 
-_:genid83 a owl:Class ;
-	owl:unionOf _:genid87 .
+_:genid132 a owl:Class ;
+	owl:unionOf _:genid136 .
 
-_:genid87 a rdf:List ;
+_:genid136 a rdf:List ;
 	rdf:first :TemporalValue ;
-	rdf:rest _:genid86 .
+	rdf:rest _:genid135 .
 
-_:genid86 a rdf:List ;
+_:genid135 a rdf:List ;
 	rdf:first :xValue ;
-	rdf:rest _:genid85 .
+	rdf:rest _:genid134 .
 
-_:genid85 a rdf:List ;
+_:genid134 a rdf:List ;
 	rdf:first :yValue ;
-	rdf:rest _:genid84 .
+	rdf:rest _:genid133 .
 
-_:genid84 a rdf:List ;
+_:genid133 a rdf:List ;
 	rdf:first :zAxis ;
 	rdf:rest rdf:nil .
 
-:VerticalProfileDomain rdfs:subClassOf _:genid88 .
+:VerticalProfileDomain rdfs:subClassOf _:genid137 .
 
-_:genid88 a owl:Restriction ;
+_:genid137 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :xValue .
 
-:VerticalProfileDomain rdfs:subClassOf _:genid89 .
+:VerticalProfileDomain rdfs:subClassOf _:genid138 .
 
-_:genid89 a owl:Restriction ;
+_:genid138 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :yValue .
 
-:VerticalProfileDomain rdfs:subClassOf _:genid90 .
+:VerticalProfileDomain rdfs:subClassOf _:genid139 .
 
-_:genid90 a owl:Restriction ;
+_:genid139 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :zAxis .
 
-:VerticalProfileDomain rdfs:subClassOf _:genid91 .
+:VerticalProfileDomain rdfs:subClassOf _:genid140 .
 
-_:genid91 a owl:Restriction ;
+_:genid140 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :TemporalValue .
@@ -823,37 +1067,37 @@ _:genid91 a owl:Restriction ;
 # http://www.example.com/linkedGDDS#txyTrajectoryDomain
 
 :txyTrajectoryDomain a owl:Class ;
-	rdfs:subClassOf :TrajectoryDomain , _:genid92 .
+	rdfs:subClassOf :TrajectoryDomain , _:genid141 .
 
-_:genid92 a owl:Restriction ;
+_:genid141 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-	owl:onClass _:genid93 .
+	owl:onClass _:genid142 .
 
-_:genid93 a owl:Class ;
-	owl:complementOf _:genid94 .
+_:genid142 a owl:Class ;
+	owl:complementOf _:genid143 .
 
-_:genid94 a owl:Class ;
-	owl:unionOf _:genid96 .
+_:genid143 a owl:Class ;
+	owl:unionOf _:genid145 .
 
-_:genid96 a rdf:List ;
+_:genid145 a rdf:List ;
 	rdf:first :txyTupleAxis ;
-	rdf:rest _:genid95 .
+	rdf:rest _:genid144 .
 
-_:genid95 a rdf:List ;
+_:genid144 a rdf:List ;
 	rdf:first :zValue ;
 	rdf:rest rdf:nil .
 
-:txyTrajectoryDomain rdfs:subClassOf _:genid97 .
+:txyTrajectoryDomain rdfs:subClassOf _:genid146 .
 
-_:genid97 a owl:Restriction ;
+_:genid146 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :txyTupleAxis .
 
-:txyTrajectoryDomain rdfs:subClassOf _:genid98 .
+:txyTrajectoryDomain rdfs:subClassOf _:genid147 .
 
-_:genid98 a owl:Restriction ;
+_:genid147 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :zValue .
@@ -863,38 +1107,36 @@ _:genid98 a owl:Restriction ;
 # http://www.example.com/linkedGDDS#txyTupleAxis
 
 :txyTupleAxis a owl:Class ;
-	rdfs:subClassOf :TupleAxis , _:genid99 .
+	rdfs:subClassOf :TupleAxis , _:genid148 .
 
-_:genid99 a owl:Restriction ;
+_:genid148 a owl:Restriction ;
 	owl:onProperty :tupleComponents ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onDataRange _:genid100 .
+	owl:onDataRange _:genid149 .
 
-_:genid100 a rdfs:Datatype ;
-	owl:oneOf _:genid101 .
+_:genid149 a rdfs:Datatype ;
+	owl:oneOf _:genid150 .
 
-_:genid101 a rdf:List ;
+_:genid150 a rdf:List ;
 	rdf:first "[\"t\",\"x\",\"y\"]" ;
 	rdf:rest rdf:nil .
-
-:txyTupleAxis owl:disjointWith :txyzTupleAxis .
 # 
 # http://www.example.com/linkedGDDS#txyzTrajectoryDomain
 
 :txyzTrajectoryDomain a owl:Class ;
-	rdfs:subClassOf :TrajectoryDomain , _:genid102 .
+	rdfs:subClassOf :TrajectoryDomain , _:genid151 .
 
-_:genid102 a owl:Restriction ;
+_:genid151 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-	owl:onClass _:genid103 .
+	owl:onClass _:genid152 .
 
-_:genid103 a owl:Class ;
+_:genid152 a owl:Class ;
 	owl:complementOf :txyzTupleAxis .
 
-:txyzTrajectoryDomain rdfs:subClassOf _:genid104 .
+:txyzTrajectoryDomain rdfs:subClassOf _:genid153 .
 
-_:genid104 a owl:Restriction ;
+_:genid153 a owl:Restriction ;
 	owl:onProperty :hasAxis ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :txyzTupleAxis .
@@ -902,17 +1144,17 @@ _:genid104 a owl:Restriction ;
 # http://www.example.com/linkedGDDS#txyzTupleAxis
 
 :txyzTupleAxis a owl:Class ;
-	rdfs:subClassOf :TupleAxis , _:genid105 .
+	rdfs:subClassOf :TupleAxis , _:genid154 .
 
-_:genid105 a owl:Restriction ;
+_:genid154 a owl:Restriction ;
 	owl:onProperty :tupleComponents ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	owl:onDataRange _:genid106 .
+	owl:onDataRange _:genid155 .
 
-_:genid106 a rdfs:Datatype ;
-	owl:oneOf _:genid107 .
+_:genid155 a rdfs:Datatype ;
+	owl:oneOf _:genid156 .
 
-_:genid107 a rdf:List ;
+_:genid156 a rdf:List ;
 	rdf:first "[\"t\",\"x\",\"y\",\"z\"]" ;
 	rdf:rest rdf:nil .
 # 
@@ -927,6 +1169,168 @@ _:genid107 a rdf:List ;
 :xValue a owl:Class ;
 	rdfs:subClassOf :SpatialValue ;
 	:informalConstraints "Must refer to a horizontal spatial value" .
+# 
+# http://www.example.com/linkedGDDS#xyMultiPointDomain
+
+:xyMultiPointDomain a owl:Class ;
+	rdfs:subClassOf :MultiPointDomain , _:genid157 .
+
+_:genid157 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+	owl:onClass _:genid158 .
+
+_:genid158 a owl:Class ;
+	owl:complementOf _:genid159 .
+
+_:genid159 a owl:Class ;
+	owl:unionOf _:genid161 .
+
+_:genid161 a rdf:List ;
+	rdf:first :TemporalValue ;
+	rdf:rest _:genid160 .
+
+_:genid160 a rdf:List ;
+	rdf:first :xyTupleAxis ;
+	rdf:rest rdf:nil .
+
+:xyMultiPointDomain rdfs:subClassOf _:genid162 .
+
+_:genid162 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :xyTupleAxis .
+
+:xyMultiPointDomain owl:disjointWith :xyzMultiPointDomain .
+# 
+# http://www.example.com/linkedGDDS#xyMultiPointSeriesDomain
+
+:xyMultiPointSeriesDomain a owl:Class ;
+	rdfs:subClassOf :MultiPointSeriesDomain , _:genid163 .
+
+_:genid163 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+	owl:onClass _:genid164 .
+
+_:genid164 a owl:Class ;
+	owl:complementOf _:genid165 .
+
+_:genid165 a owl:Class ;
+	owl:unionOf _:genid167 .
+
+_:genid167 a rdf:List ;
+	rdf:first :TemporalAxis ;
+	rdf:rest _:genid166 .
+
+_:genid166 a rdf:List ;
+	rdf:first :xyTupleAxis ;
+	rdf:rest rdf:nil .
+
+:xyMultiPointSeriesDomain rdfs:subClassOf _:genid168 .
+
+_:genid168 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :xyTupleAxis .
+
+:xyMultiPointSeriesDomain owl:disjointWith :xyzMultiPointSeriesDomain .
+# 
+# http://www.example.com/linkedGDDS#xyTupleAxis
+
+:xyTupleAxis a owl:Class ;
+	rdfs:subClassOf :TupleAxis , _:genid169 .
+
+_:genid169 a owl:Restriction ;
+	owl:onProperty :tupleComponents ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onDataRange _:genid170 .
+
+_:genid170 a rdfs:Datatype ;
+	owl:oneOf _:genid171 .
+
+_:genid171 a rdf:List ;
+	rdf:first "[\"x\",\"y\"]" ;
+	rdf:rest rdf:nil .
+# 
+# http://www.example.com/linkedGDDS#xyzMultiPointDomain
+
+:xyzMultiPointDomain a owl:Class ;
+	rdfs:subClassOf :MultiPointDomain , _:genid172 .
+
+_:genid172 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+	owl:onClass _:genid173 .
+
+_:genid173 a owl:Class ;
+	owl:complementOf _:genid174 .
+
+_:genid174 a owl:Class ;
+	owl:unionOf _:genid176 .
+
+_:genid176 a rdf:List ;
+	rdf:first :TemporalValue ;
+	rdf:rest _:genid175 .
+
+_:genid175 a rdf:List ;
+	rdf:first :xyzTupleAxis ;
+	rdf:rest rdf:nil .
+
+:xyzMultiPointDomain rdfs:subClassOf _:genid177 .
+
+_:genid177 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :xyzTupleAxis .
+# 
+# http://www.example.com/linkedGDDS#xyzMultiPointSeriesDomain
+
+:xyzMultiPointSeriesDomain a owl:Class ;
+	rdfs:subClassOf :MultiPointSeriesDomain , _:genid178 .
+
+_:genid178 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+	owl:onClass _:genid179 .
+
+_:genid179 a owl:Class ;
+	owl:complementOf _:genid180 .
+
+_:genid180 a owl:Class ;
+	owl:unionOf _:genid182 .
+
+_:genid182 a rdf:List ;
+	rdf:first :TemporalAxis ;
+	rdf:rest _:genid181 .
+
+_:genid181 a rdf:List ;
+	rdf:first :xyzTupleAxis ;
+	rdf:rest rdf:nil .
+
+:xyzMultiPointSeriesDomain rdfs:subClassOf _:genid183 .
+
+_:genid183 a owl:Restriction ;
+	owl:onProperty :hasAxis ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onClass :xyzTupleAxis .
+# 
+# http://www.example.com/linkedGDDS#xyzTupleAxis
+
+:xyzTupleAxis a owl:Class ;
+	rdfs:subClassOf :TupleAxis , _:genid184 .
+
+_:genid184 a owl:Restriction ;
+	owl:onProperty :tupleComponents ;
+	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+	owl:onDataRange _:genid185 .
+
+_:genid185 a rdfs:Datatype ;
+	owl:oneOf _:genid186 .
+
+_:genid186 a rdf:List ;
+	rdf:first "[\"x\",\"y\",\"z\"]" ;
+	rdf:rest rdf:nil .
 # 
 # http://www.example.com/linkedGDDS#yAxis
 
@@ -983,154 +1387,174 @@ _:genid107 a rdf:List ;
 # 
 # 
 
-_:genid108 a owl:AllDisjointClasses ;
-	owl:members _:genid116 .
+_:genid187 a owl:AllDisjointClasses ;
+	owl:members _:genid195 .
 
-_:genid116 a rdf:List ;
+_:genid195 a rdf:List ;
 	rdf:first :Axis ;
-	rdf:rest _:genid115 .
+	rdf:rest _:genid194 .
 
-_:genid115 a rdf:List ;
+_:genid194 a rdf:List ;
 	rdf:first :Coverage ;
-	rdf:rest _:genid114 .
+	rdf:rest _:genid193 .
 
-_:genid114 a rdf:List ;
+_:genid193 a rdf:List ;
 	rdf:first :CoverageCollection ;
-	rdf:rest _:genid113 .
+	rdf:rest _:genid192 .
 
-_:genid113 a rdf:List ;
+_:genid192 a rdf:List ;
 	rdf:first :Domain ;
-	rdf:rest _:genid112 .
+	rdf:rest _:genid191 .
 
-_:genid112 a rdf:List ;
+_:genid191 a rdf:List ;
 	rdf:first :Parameter ;
-	rdf:rest _:genid111 .
+	rdf:rest _:genid190 .
 
-_:genid111 a rdf:List ;
+_:genid190 a rdf:List ;
 	rdf:first :Range ;
-	rdf:rest _:genid110 .
+	rdf:rest _:genid189 .
 
-_:genid110 a rdf:List ;
+_:genid189 a rdf:List ;
 	rdf:first :RangeDataType ;
-	rdf:rest _:genid109 .
+	rdf:rest _:genid188 .
 
-_:genid109 a rdf:List ;
+_:genid188 a rdf:List ;
 	rdf:first :ReferenceSystem ;
 	rdf:rest rdf:nil .
 # 
 
-_:genid117 a owl:AllDisjointClasses ;
-	owl:members _:genid120 .
+_:genid196 a owl:AllDisjointClasses ;
+	owl:members _:genid199 .
 
-_:genid120 a rdf:List ;
+_:genid199 a rdf:List ;
 	rdf:first :CategoricalAxis ;
-	rdf:rest _:genid119 .
+	rdf:rest _:genid198 .
 
-_:genid119 a rdf:List ;
+_:genid198 a rdf:List ;
 	rdf:first :RangeAxis ;
-	rdf:rest _:genid118 .
+	rdf:rest _:genid197 .
 
-_:genid118 a rdf:List ;
+_:genid197 a rdf:List ;
 	rdf:first :SingleValueAxis ;
 	rdf:rest rdf:nil .
 # 
 
-_:genid121 a owl:AllDisjointClasses ;
-	owl:members _:genid133 .
+_:genid200 a owl:AllDisjointClasses ;
+	owl:members _:genid212 .
 
-_:genid133 a rdf:List ;
+_:genid212 a rdf:List ;
 	rdf:first :GridDomain ;
-	rdf:rest _:genid132 .
+	rdf:rest _:genid211 .
 
-_:genid132 a rdf:List ;
+_:genid211 a rdf:List ;
 	rdf:first :MultiPointDomain ;
-	rdf:rest _:genid131 .
+	rdf:rest _:genid210 .
 
-_:genid131 a rdf:List ;
+_:genid210 a rdf:List ;
 	rdf:first :MultiPointSeriesDomain ;
-	rdf:rest _:genid130 .
+	rdf:rest _:genid209 .
 
-_:genid130 a rdf:List ;
+_:genid209 a rdf:List ;
 	rdf:first :MultiPolygonDomain ;
-	rdf:rest _:genid129 .
+	rdf:rest _:genid208 .
 
-_:genid129 a rdf:List ;
+_:genid208 a rdf:List ;
 	rdf:first :MultiPolygonSeriesDomain ;
-	rdf:rest _:genid128 .
+	rdf:rest _:genid207 .
 
-_:genid128 a rdf:List ;
+_:genid207 a rdf:List ;
 	rdf:first :PointDomain ;
-	rdf:rest _:genid127 .
+	rdf:rest _:genid206 .
 
-_:genid127 a rdf:List ;
+_:genid206 a rdf:List ;
 	rdf:first :PointSeriesDomain ;
-	rdf:rest _:genid126 .
+	rdf:rest _:genid205 .
 
-_:genid126 a rdf:List ;
+_:genid205 a rdf:List ;
 	rdf:first :PolygonDomain ;
-	rdf:rest _:genid125 .
+	rdf:rest _:genid204 .
 
-_:genid125 a rdf:List ;
+_:genid204 a rdf:List ;
 	rdf:first :PolygonSeriesDomain ;
-	rdf:rest _:genid124 .
+	rdf:rest _:genid203 .
 
-_:genid124 a rdf:List ;
+_:genid203 a rdf:List ;
 	rdf:first :SectionDomain ;
-	rdf:rest _:genid123 .
+	rdf:rest _:genid202 .
 
-_:genid123 a rdf:List ;
+_:genid202 a rdf:List ;
 	rdf:first :TrajectoryDomain ;
-	rdf:rest _:genid122 .
+	rdf:rest _:genid201 .
 
-_:genid122 a rdf:List ;
+_:genid201 a rdf:List ;
 	rdf:first :VerticalProfileDomain ;
 	rdf:rest rdf:nil .
 # 
 
-_:genid134 a owl:AllDisjointClasses ;
-	owl:members _:genid137 .
+_:genid213 a owl:AllDisjointClasses ;
+	owl:members _:genid216 .
 
-_:genid137 a rdf:List ;
+_:genid216 a rdf:List ;
 	rdf:first :PolygonValue ;
-	rdf:rest _:genid136 .
+	rdf:rest _:genid215 .
 
-_:genid136 a rdf:List ;
+_:genid215 a rdf:List ;
 	rdf:first :SpatialValue ;
-	rdf:rest _:genid135 .
+	rdf:rest _:genid214 .
 
-_:genid135 a rdf:List ;
+_:genid214 a rdf:List ;
 	rdf:first :TemporalValue ;
 	rdf:rest rdf:nil .
 # 
 
-_:genid138 a owl:AllDisjointClasses ;
-	owl:members _:genid141 .
+_:genid217 a owl:AllDisjointClasses ;
+	owl:members _:genid221 .
 
-_:genid141 a rdf:List ;
+_:genid221 a rdf:List ;
+	rdf:first :txyTupleAxis ;
+	rdf:rest _:genid220 .
+
+_:genid220 a rdf:List ;
+	rdf:first :txyzTupleAxis ;
+	rdf:rest _:genid219 .
+
+_:genid219 a rdf:List ;
+	rdf:first :xyTupleAxis ;
+	rdf:rest _:genid218 .
+
+_:genid218 a rdf:List ;
+	rdf:first :xyzTupleAxis ;
+	rdf:rest rdf:nil .
+# 
+
+_:genid222 a owl:AllDisjointClasses ;
+	owl:members _:genid225 .
+
+_:genid225 a rdf:List ;
 	rdf:first :xAxis ;
-	rdf:rest _:genid140 .
+	rdf:rest _:genid224 .
 
-_:genid140 a rdf:List ;
+_:genid224 a rdf:List ;
 	rdf:first :yAxis ;
-	rdf:rest _:genid139 .
+	rdf:rest _:genid223 .
 
-_:genid139 a rdf:List ;
+_:genid223 a rdf:List ;
 	rdf:first :zAxis ;
 	rdf:rest rdf:nil .
 # 
 
-_:genid142 a owl:AllDisjointClasses ;
-	owl:members _:genid145 .
+_:genid226 a owl:AllDisjointClasses ;
+	owl:members _:genid229 .
 
-_:genid145 a rdf:List ;
+_:genid229 a rdf:List ;
 	rdf:first :xValue ;
-	rdf:rest _:genid144 .
+	rdf:rest _:genid228 .
 
-_:genid144 a rdf:List ;
+_:genid228 a rdf:List ;
 	rdf:first :yValue ;
-	rdf:rest _:genid143 .
+	rdf:rest _:genid227 .
 
-_:genid143 a rdf:List ;
+_:genid227 a rdf:List ;
 	rdf:first :zValue ;
 	rdf:rest rdf:nil .
 # 
