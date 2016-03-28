@@ -20,6 +20,7 @@
 # http://www.example.com/linkedDGGSexample#AxisX
 
 :AxisX a owl:NamedIndividual , linkedgdds:xAxis ;
+	linkedgdds:usesReferenceSystem :ExampleReferenceSystem ;
 	linkedgdds:axisSize "7"^^xsd:positiveInteger ;
 	linkedgdds:axisStart "1.0"^^xsd:double ;
 	linkedgdds:axisStop "7.0"^^xsd:double .
@@ -27,6 +28,7 @@
 # http://www.example.com/linkedDGGSexample#AxisY
 
 :AxisY a owl:NamedIndividual , linkedgdds:yAxis ;
+	linkedgdds:usesReferenceSystem :ExampleReferenceSystem ;
 	linkedgdds:axisSize "5"^^xsd:positiveInteger ;
 	linkedgdds:axisStart "0.0"^^xsd:double ;
 	linkedgdds:axisStop "0.4"^^xsd:double .
@@ -57,6 +59,11 @@
 :ExampleRange a owl:NamedIndividual , linkedgdds:Range ;
 	linkedgdds:hasDataType linkedgdds:IntegerDataType ;
 	linkedgdds:rangeValues "[11, 21, 31, 41, 51, 12, 22, 32, 42, 52, 13, 23, 33, 43, 53, 14, 24, 34, 44, 54, 15, 25, 35, 45, 55, 16, 26, 36, 46, 56, 17, 27, 37, 47, 57]" .
+# 
+# http://www.example.com/linkedDGGSexample#ExampleReferenceSystem
+
+:ExampleReferenceSystem a owl:NamedIndividual , linkedgdds:SpatialReferenceSystem ;
+	linkedgdds:spatialRSid "http://www.example.com/example_spatial_CRS" .
 # 
 # http://www.example.com/linkedDGGSexample#ExampleUnit
 
