@@ -35,8 +35,7 @@
 
 :ExampleCoverage a owl:NamedIndividual , linkedgdds:Coverage ;
 	linkedgdds:hasDomain :ExampleDomain ;
-	linkedgdds:hasParameter :ExampleParameter ;
-	linkedgdds:hasRange :ExampleRange .
+	linkedgdds:hasParameter :ExampleParameter .
 # 
 # http://www.example.com/linkedDGGSexample#ExampleDomain
 
@@ -47,6 +46,7 @@
 # http://www.example.com/linkedDGGSexample#ExampleParameter
 
 :ExampleParameter a owl:NamedIndividual , linkedgdds:UnitParameter ;
+	linkedgdds:hasRange :ExampleRange ;
 	linkedgdds:usesUnit :ExampleUnit ;
 	linkedgdds:parameterDescription "A parameter I've made as an example"@en ;
 	linkedgdds:parameterID "http://www.example.com/example_parameter" ;

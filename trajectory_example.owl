@@ -28,8 +28,7 @@
 
 :AccidentDataCoverage a owl:NamedIndividual , linkedgdds:Coverage ;
 	linkedgdds:hasDomain :AccidentDataDomain ;
-	linkedgdds:hasParameter :AccidentURL ;
-	linkedgdds:hasRange :AccidentDataRange .
+	linkedgdds:hasParameter :AccidentURL .
 # 
 # http://www.example.com/TrajectoryExample#AccidentDataDomain
 
@@ -45,6 +44,7 @@
 # http://www.example.com/TrajectoryExample#AccidentURL
 
 :AccidentURL a owl:NamedIndividual , linkedgdds:Parameter ;
+	linkedgdds:hasRange :AccidentDataRange ;
 	linkedgdds:parameterDescription "A link to more information about the accident"@en ;
 	linkedgdds:parameterLabel "Accident URL"@en .
 # 
