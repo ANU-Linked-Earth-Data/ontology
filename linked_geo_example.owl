@@ -19,7 +19,7 @@
 # 
 # http://www.example.com/linkedDGGSexample#AxisX
 
-:AxisX a owl:NamedIndividual , linkedgdds:xAxis ;
+:AxisX a owl:NamedIndividual , linkedgdds:RangeAxis ;
 	linkedgdds:usesReferenceSystem :ExampleReferenceSystem ;
 	linkedgdds:axisSize "7"^^xsd:positiveInteger ;
 	linkedgdds:axisStart "1.0"^^xsd:double ;
@@ -27,7 +27,7 @@
 # 
 # http://www.example.com/linkedDGGSexample#AxisY
 
-:AxisY a owl:NamedIndividual , linkedgdds:yAxis ;
+:AxisY a owl:NamedIndividual , linkedgdds:RangeAxis ;
 	linkedgdds:usesReferenceSystem :ExampleReferenceSystem ;
 	linkedgdds:axisSize "5"^^xsd:positiveInteger ;
 	linkedgdds:axisStart "0.0"^^xsd:double ;
@@ -42,7 +42,8 @@
 # http://www.example.com/linkedDGGSexample#ExampleDomain
 
 :ExampleDomain a owl:NamedIndividual , linkedgdds:GridDomain ;
-	linkedgdds:hasAxis :AxisX , :AxisY ;
+	linkedgdds:xAxis :AxisX ;
+	linkedgdds:yAxis :AxisY ;
 	linkedgdds:rangeAxisOrder "[\"y\", \"x\"]" .
 # 
 # http://www.example.com/linkedDGGSexample#ExampleParameter
