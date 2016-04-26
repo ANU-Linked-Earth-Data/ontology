@@ -1,6 +1,7 @@
 @prefix : <http://www.example.org/ANU-LED-example#> .
 @prefix qb: <http://purl.org/linked-data/cube#> .
 @prefix led: <http://www.example.org/ANU-LED#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -35,7 +36,7 @@
 #
 # http://www.example.org/ANU-LED-example#instrumentComponent
 
-:instrumentComponent a owl:NamedIndividual , qb:ComponentSpecification .
+:instrumentComponent a owl:NamedIndividual , qb:ComponentSpecification ;
 	qb:attribute :instrument .
 #
 # http://www.example.org/ANU-LED-example#positionComponent
@@ -45,24 +46,24 @@
 #
 # http://www.example.org/ANU-LED-example#satelliteComponent
 
-:satelliteComponent a owl:NamedIndividual , qb:ComponentSpecification .
+:satelliteComponent a owl:NamedIndividual , qb:ComponentSpecification ;
 	qb:attribute :satellite .
 #
 # http://www.example.org/ANU-LED-example#timeComponent
 
-:timeComponent a owl:NamedIndividual , qb:ComponentSpecification .
+:timeComponent a owl:NamedIndividual , qb:ComponentSpecification ;
 	qb:dimension sdmx-dimension:timePeriod .
 
-:dataComponent a owl:NamedIndividual , qb:ComponentSpecification .
+:dataComponent a owl:NamedIndividual , qb:ComponentSpecification ;
 	qb:dimension led:imageData .
 
 # Attributes
 
 :instrument a owl:ObjectProperty, qb:AttributeProperty ;
-    rdfs:range gcmd-instrument:Instrument;
+    rdfs:range gcmd-instrument:Instrument .
 
 :satellite a owl:ObjectProperty, qb:AttributeProperty ;
-    rdfs:range gcmd-platform:PLATFORM;
+    rdfs:range gcmd-platform:PLATFORM .
 
 # Observations
 
