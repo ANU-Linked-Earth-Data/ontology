@@ -52,7 +52,7 @@
 # http://www.example.org/ANU-LED-example#timeComponent
 
 :timeComponent a owl:NamedIndividual , qb:ComponentSpecification ;
-	qb:dimension sdmx-dimension:timePeriod .
+	qb:dimension :time .
 
 :dataComponent a owl:NamedIndividual , qb:ComponentSpecification ;
 	qb:dimension led:imageData .
@@ -64,13 +64,16 @@
 
 :satellite a owl:ObjectProperty, qb:AttributeProperty ;
     rdfs:range gcmd-platform:PLATFORM .
+    
+:instrument a owl:DatatypeProperty, qb:AttributeProperty ;
+    rdfs:range xsd:dateTime .
 
 # Observations
 
 :s1 a led:GridSquare ;
     qb:dataSet :exampleDataset ;
     led:location [geo:lat "100"; geo:long "100"] ;
-    sdmx-dimension:timePeriod <http://reference.data.gov.uk/id/gregorian-interval/2004-01-01T00:00:00/P3Y> ;
+    :time "2001-10-26T21:32:52"^^xsd:dateTime ;
     led:imageData "http://www.example.org/led-example-image-100-100-150-150" ;
     led:pixelWidth "50" ;
     led:pixelHeight "50" ;
@@ -83,7 +86,7 @@
 :s2 a led:GridSquare ;
     qb:dataSet :exampleDataset ;
     led:location [geo:lat "100"; geo:long "100"] ;
-    sdmx-dimension:timePeriod <http://reference.data.gov.uk/id/gregorian-interval/2004-01-01T00:00:00/P3Y> ;
+    :time "2001-10-26T21:32:52"^^xsd:dateTime ;
     led:imageData "http://www.example.org/led-example-image-100-100-125-125" ;
     led:pixelWidth "50" ;
     led:pixelHeight "50" ;
