@@ -32,7 +32,7 @@
 # http://www.example.org/ANU-LED-example#exampleStructure
 
 :exampleStructure a owl:NamedIndividual , qb:DataStructureDefinition ;
-	qb:componentProperty :instrumentComponent , :positionComponent , :satelliteComponent , :timeComponent, :dataComponent .
+	qb:component :instrumentComponent , :positionComponent , :satelliteComponent , :timeComponent, :dataComponent .
 #
 # http://www.example.org/ANU-LED-example#instrumentComponent
 
