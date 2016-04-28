@@ -1,4 +1,5 @@
 @prefix : <http://www.example.org/ANU-LED-example#> .
+@prefix ogc: <http://www.opengis.net/ont/geosparql#> .
 @prefix qb: <http://purl.org/linked-data/cube#> .
 @prefix led: <http://www.example.org/ANU-LED#> .
 @prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
@@ -77,10 +78,7 @@
     led:imageData "http://www.example.org/led-example-image-100-100-150-150" ;
     led:pixelWidth "50" ;
     led:pixelHeight "50" ;
-    led:corner  [geo:lat "100"; geo:long "100"] ;
-    led:corner  [geo:lat "100"; geo:long "150"] ;
-    led:corner  [geo:lat "150"; geo:long "100"] ;
-    led:corner  [geo:lat "150"; geo:long "150"] ;
+    led:bounds  "POLYGON((100 100, 100 150, 150 150, 150 100, 100 100))"^^ogc:wktLiteral ;
     led:containsSquare :s2 .
     
 :s2 a led:GridSquare ;
@@ -90,10 +88,7 @@
     led:imageData "http://www.example.org/led-example-image-100-100-125-125" ;
     led:pixelWidth "50" ;
     led:pixelHeight "50" ;
-    led:corner  [geo:lat "100"; geo:long "100"] ;
-    led:corner  [geo:lat "100"; geo:long "125"] ;
-    led:corner  [geo:lat "125"; geo:long "100"] ;
-    led:corner  [geo:lat "125"; geo:long "125"] ;
+    led:bounds  "POLYGON((100 100, 100 125, 125 125, 125 100, 100 100))"^^ogc:wktLiteral ;
     led:containedInSquare :s1 .
 
 #
