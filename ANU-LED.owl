@@ -23,6 +23,7 @@
 # http://www.example.org/ANU-LED#containedInSquare
 
 :containedInSquare a owl:ObjectProperty ;
+    rdfs:subPropertyOf ogc:sfWithin ;
 	owl:inverseOf :containsSquare ;
 	rdfs:domain :GridSquare ;
 	rdfs:range :GridSquare .
@@ -30,13 +31,16 @@
 # http://www.example.org/ANU-LED#containsSquare
 
 :containsSquare a owl:ObjectProperty ;
+    rdfs:subPropertyOf ogc:sfContains ;
 	rdfs:domain :GridSquare ;
 	rdfs:range :GridSquare .
 # 
 # http://www.example.org/ANU-LED#bounds
 
 :bounds a owl:DatatypeProperty ;
-	rdfs:range ogc:wktLiteral .
+    rdfs:subPropertyOf ogc:asWKT ;
+    rdfs:domain :GridSquare .
+
 # 
 # http://www.example.org/ANU-LED#location
 
@@ -78,7 +82,7 @@
 # http://www.example.org/ANU-LED#GridSquare
 
 :GridSquare a owl:Class ;
-	rdfs:subClassOf qb:Observation , foaf:Image .
+	rdfs:subClassOf qb:Observation , foaf:Image , ogc:Geometry .
 
 :Pixel a owl:Class ;
 	rdfs:subClassOf :GridSquare .
