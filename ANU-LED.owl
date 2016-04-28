@@ -48,7 +48,7 @@
 	rdfs:subPropertyOf geo:location .
     
 :imageData a owl:DatatypeProperty, qb:MeasureProperty ;
-	rdfs:range xsd:anyURI .
+	rdfs:range xsd:anyURI, xsd:integer .
 
 # 
 # #################################################################
