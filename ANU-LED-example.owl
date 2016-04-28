@@ -28,12 +28,13 @@
 :exampleDataset a owl:NamedIndividual , qb:DataSet ;
 	qb:structure :exampleStructure ;
     :instrument gcmd-instrument:SCANNER ;
-    :satellite gcmd-platform:LANDSAT-7 .
+    :satellite gcmd-platform:LANDSAT-7 ;
+    :band "4" .
 #
 # http://www.example.org/ANU-LED-example#exampleStructure
 
 :exampleStructure a owl:NamedIndividual , qb:DataStructureDefinition ;
-	qb:component :instrumentComponent , :positionComponent , :satelliteComponent , :timeComponent, :dataComponent .
+	qb:component :instrumentComponent , :positionComponent , :satelliteComponent , :bandComponent, :timeComponent, :dataComponent .
 #
 # http://www.example.org/ANU-LED-example#instrumentComponent
 
@@ -49,6 +50,9 @@
 
 :satelliteComponent a owl:NamedIndividual , qb:ComponentSpecification ;
 	qb:attribute :satellite .
+    
+:bandComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+	qb:attribute :band .
 #
 # http://www.example.org/ANU-LED-example#timeComponent
 
@@ -66,7 +70,10 @@
 :satellite a owl:ObjectProperty, qb:AttributeProperty ;
     rdfs:range gcmd-platform:PLATFORM .
     
-:instrument a owl:DatatypeProperty, qb:AttributeProperty ;
+:band a owl:DatatypeProperty, qb:AttributeProperty ;
+    rdfs:range xsd:integer .
+    
+:time a owl:DatatypeProperty, qb:AttributeProperty ;
     rdfs:range xsd:dateTime .
 
 # Observations
@@ -76,8 +83,7 @@
     led:location [geo:lat "100"; geo:long "100"] ;
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
     led:imageData "http://www.example.org/led-example-image-100-100-150-150" ;
-    led:pixelWidth "50" ;
-    led:pixelHeight "50" ;
+    led:resolution "1.0"^^led:pixelsPerDegree ;
     led:bounds  "POLYGON((100 100, 100 150, 150 150, 150 100, 100 100))"^^ogc:wktLiteral ;
     
 :s2 a led:GridSquare ;
@@ -85,8 +91,7 @@
     led:location [geo:lat "100"; geo:long "100"] ;
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
     led:imageData "http://www.example.org/led-example-image-100-100-125-125" ;
-    led:pixelWidth "50" ;
-    led:pixelHeight "50" ;
+    led:resolution "2.0"^^led:pixelsPerDegree ;
     led:bounds  "POLYGON((100 100, 100 125, 125 125, 125 100, 100 100))"^^ogc:wktLiteral ;
     led:containedInSquare :s1 .
     
@@ -95,7 +100,8 @@
     led:location [geo:lat "105"; geo:long "105"] ;
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
     led:imageData "15"^^xsd:integer ;
-    led:bounds  "POLYGON((105 105, 105 106, 106 106, 106 105, 105 105))"^^ogc:wktLiteral ;
+    led:resolution "2.0"^^led:pixelsPerDegree ;
+    led:bounds  "POLYGON((105 105, 105 105.5, 105.5 105.5, 105.5 105, 105 105))"^^ogc:wktLiteral ;
     led:containedInSquare :s1 ;
     led:containedInSquare :s2 .
 

@@ -58,17 +58,13 @@
 # #################################################################
 # 
 # 
-# http://www.example.org/ANU-LED#pixelHeight
+# http://www.example.org/ANU-LED#resolution
 
-:pixelHeight a owl:DatatypeProperty , owl:FunctionalProperty ;
-	rdfs:domain :GridSquare ;
-	rdfs:range xsd:integer .
-# 
-# http://www.example.org/ANU-LED#pixelWidth
+:pixelsPerDegree rdf:type rdfs:Datatype ;
+    owl:equivalentClass xsd:double .
 
-:pixelWidth a owl:DatatypeProperty , owl:FunctionalProperty ;
-	rdfs:domain :GridSquare ;
-	rdfs:range xsd:integer .
+:resolution a owl:DatatypeProperty , owl:FunctionalProperty ;
+	rdfs:range :pixelsPerDegree .
 # 
 # 
 # 
