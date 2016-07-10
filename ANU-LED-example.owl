@@ -48,6 +48,8 @@
 
 :exampleStructure a owl:NamedIndividual , qb:DataStructureDefinition ;
 	qb:component :positionComponent ,
+                 :latitudeComponent ,
+                 :longitudeComponent ,
                  :timeComponent ,
                  :satelliteComponent ,
                  :instrumentComponent ,
@@ -60,6 +62,12 @@
 
 :positionComponent a owl:NamedIndividual , qb:ComponentSpecification ;
 	qb:dimension led:location .
+    
+:latitudeComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+	qb:dimension led:lat .
+    
+:longitudeComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+	qb:dimension led:long .
 
 :timeComponent a owl:NamedIndividual , qb:ComponentSpecification ;
 	qb:dimension :time .   
@@ -123,6 +131,8 @@
 :s1 a led:GridSquare ;
     qb:dataSet :exampleDataset ;
     led:location [geo:lat "91.6667"; geo:long "40.0270"] ;
+    led:lat "91.6667";
+    led:long "40.0270";
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
     led:imageData "http://www.example.org/led-example-image-R000" ;
     led:resolution "0.9"^^led:pixelsPerDegree ;
@@ -134,6 +144,8 @@
 :s2 a led:GridSquare ;
     qb:dataSet :exampleDataset ;
     led:location [geo:lat "90.5556"; geo:long "41.2471"] ;
+    led:lat "90.5556";
+    led:long "41.2471";
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
     led:imageData "http://www.example.org/led-example-image-R0000" ;
     led:resolution "2.7"^^led:pixelsPerDegree ;
@@ -146,6 +158,8 @@
 :p1 a led:Pixel ;
     qb:dataSet :exampleDataset ;
     led:location [geo:lat "90.5556"; geo:long "41.2444"] ;
+    led:lat "90.5556";
+    led:long "41.2444";
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
     led:imageData "15"^^xsd:integer ;
     led:resolution "2.7"^^led:pixelsPerDegree ;
