@@ -1,6 +1,7 @@
 @prefix : <http://www.example.org/ANU-LED-example#> .
 @prefix ogc: <http://www.opengis.net/ont/geosparql#> .
 @prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix ssn: <http://purl.oclc.org/NET/ssnx/ssn#> .
 @prefix led: <http://www.example.org/ANU-LED#> .
 @prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -8,13 +9,27 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sweet: <http://sweet.jpl.nasa.gov/2.3/prop.owl#> .
 @prefix sdmx-dimension:  <http://purl.org/linked-data/sdmx/2009/dimension#> .
-@prefix gcmd-platform: <http://geobrain.laits.gmu.edu/ontology/2004/11/gcmd-platform.owl#> .
-@prefix gcmd-instrument: <http://geobrain.laits.gmu.edu/ontology/2004/11/gcmd-instrument.owl#> .
 
 <http://www.example.org/ANU-LED-example> a owl:Ontology ;
 	owl:imports <http://www.example.org/ANU-LED> .
+    
+#################################################################
+#        SSN description
+#################################################################
+:landsat-8 a owl:NamedIndividual, ssn:Platform .
 
+:OLI a owl:NamedIndividual, ssn:Sensor ;
+    ssn:onPlatform :landsat-8 ;
+    ssn:hasMeasurementCapability :oli-capability ;
+    ssn:observes :reflectance .
+    
+:oli-capability a owl:NamedIndividual, ssn:MeasurementCapability ;
+    ssn:forProperty :reflectance .
+
+:reflectance a owl:NamedIndividual, ssn:Property ;
+    owl:sameAs sweet:Reflectance .
 
 #################################################################
 #        Dataset
@@ -22,8 +37,8 @@
 
 :exampleDataset a owl:NamedIndividual , qb:DataSet ;
 	qb:structure :exampleStructure ;
-    :instrument gcmd-instrument:SCANNER ;
-    :satellite gcmd-platform:LANDSAT-7 ;
+    :instrument :OLI ;
+    :satellite :landsat-8 ;
     :band "4" ;
     :dggs "rHEALPix WGS84 Ellipsoid" .
 
@@ -81,10 +96,10 @@
     rdfs:range xsd:dateTime .
     
 :satellite a owl:ObjectProperty, qb:AttributeProperty ;
-    rdfs:range gcmd-platform:PLATFORM .
+    rdfs:range ssn:Platform .
     
 :instrument a owl:ObjectProperty, qb:AttributeProperty ;
-    rdfs:range gcmd-instrument:Instrument .
+    rdfs:range ssn:Sensor .
     
 :band a owl:DatatypeProperty, qb:AttributeProperty ;
     rdfs:range xsd:integer .
