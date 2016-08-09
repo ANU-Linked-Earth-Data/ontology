@@ -37,7 +37,7 @@
 # 
 # http://www.example.org/ANU-LED#bounds
 
-:bounds a owl:DatatypeProperty ;
+:bounds a owl:DatatypeProperty, owl:FunctionalProperty, qb:AttributeProperty ;
     rdfs:subPropertyOf ogc:asWKT ;
     rdfs:domain :GridSquare .
 
@@ -54,7 +54,7 @@
 	rdfs:subPropertyOf geo:long .
     
 :imageData a owl:DatatypeProperty, qb:MeasureProperty ;
-	rdfs:range xsd:anyURI, xsd:integer .
+	rdfs:range [owl:unionOf(xsd:anyURI xsd:integer)] .
 
 # 
 # #################################################################
@@ -69,7 +69,7 @@
 :pixelsPerDegree rdf:type rdfs:Datatype ;
     owl:equivalentClass xsd:double .
 
-:resolution a owl:DatatypeProperty , owl:FunctionalProperty ;
+:resolution a owl:DatatypeProperty, owl:FunctionalProperty, qb:AttributeProperty ;
 	rdfs:range :pixelsPerDegree .
 # 
 # 

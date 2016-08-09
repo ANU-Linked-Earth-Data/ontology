@@ -58,7 +58,9 @@
                  :dggsComponent ,
                  :dggsCellComponent ,
                  :dggsLevelSquareComponent ,
-                 :dggsLevelPixelComponent .
+                 :dggsLevelPixelComponent ,
+                 :resolutionComponent ,
+                 :boundsComponent .
 
 :positionComponent a owl:NamedIndividual , qb:ComponentSpecification ;
 	qb:dimension led:location .
@@ -95,6 +97,12 @@
     
 :dggsLevelPixelComponent a owl:NamedIndividual , qb:ComponentSpecification ;
 	qb:dimension :dggsLevelPixel .
+    
+:resolutionComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+	qb:attribute led:resolution .
+    
+:boundsComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+	qb:attribute led:bounds .
 
 #################################################################
 #        New properties for the attributes
