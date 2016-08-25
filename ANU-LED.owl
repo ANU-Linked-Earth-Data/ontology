@@ -8,6 +8,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sdmx-concept:  <http://purl.org/linked-data/sdmx/2009/concept#> .
 
 <http://www.example.org/ANU-LED> a owl:Ontology ;
 	owl:imports <http://purl.org/linked-data/cube> .
@@ -39,7 +40,8 @@
 
 :bounds a owl:DatatypeProperty, owl:FunctionalProperty, qb:AttributeProperty ;
     rdfs:subPropertyOf ogc:asWKT ;
-    rdfs:domain :GridSquare .
+    rdfs:domain :GridSquare ;
+    qb:concept sdmx-concept:refArea .
 
 # 
 # http://www.example.org/ANU-LED#location
