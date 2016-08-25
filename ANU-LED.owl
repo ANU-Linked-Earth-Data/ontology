@@ -56,7 +56,8 @@
 	rdfs:subPropertyOf geo:long .
     
 :imageData a owl:DatatypeProperty, qb:MeasureProperty ;
-	rdfs:range [owl:unionOf(xsd:anyURI xsd:integer)] .
+	rdfs:range [owl:unionOf(xsd:anyURI xsd:integer)] ;
+	qb:concept sdmx-concept:obsValue .
 
 # 
 # #################################################################
