@@ -12,7 +12,11 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sweet: <http://sweet.jpl.nasa.gov/2.3/prop.owl#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix sdmx-dimension:  <http://purl.org/linked-data/sdmx/2009/dimension#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sdmx-concept:  <http://purl.org/linked-data/sdmx/2009/concept#> .
+@prefix cci-platform: <http://vocab-test.ceda.ac.uk/collection/cci/platform/> .
+@prefix cci-sensor: <http://vocab-test.ceda.ac.uk/collection/cci/sensor/> .
+@prefix cci-dataType: <http://vocab-test.ceda.ac.uk/collection/cci/dataType/> .
 
 <http://www.example.org/ANU-LED-example> a owl:Ontology ;
 	owl:imports <http://www.example.org/ANU-LED> .
@@ -20,18 +24,21 @@
 #################################################################
 #        SSN description
 #################################################################
-:landsat-8 a owl:NamedIndividual, ssn:Platform .
+:landsat-8 a owl:NamedIndividual, ssn:Platform ;
+    owl:sameAs cci-platform:plat_landsat_8 .
 
 :OLI a owl:NamedIndividual, ssn:Sensor ;
     ssn:onPlatform :landsat-8 ;
     ssn:hasMeasurementCapability :oli-capability ;
-    ssn:observes :reflectance .
+    ssn:observes :reflectance ;
+    owl:sameAs cci-sensor:sens_oli .
     
 :oli-capability a owl:NamedIndividual, ssn:MeasurementCapability ;
     ssn:forProperty :reflectance .
 
-:reflectance a owl:NamedIndividual, ssn:Property ;
-    owl:sameAs sweet:Reflectance .
+:reflectance a owl:NamedIndividual, ssn:Property, skos:Concept ;
+    owl:sameAs sweet:Reflectance ;
+    owl:sameAs cci-dataType:dtype_sr .
 
 #################################################################
 #        Dataset
@@ -105,7 +112,7 @@
 	qb:attribute :band .
     
 :dataComponent a owl:NamedIndividual , qb:ComponentSpecification ;
-	qb:measure led:imageData .
+	qb:measure :dataValue .
     
 :dggsComponent a owl:NamedIndividual , qb:ComponentSpecification ;
 	qb:attribute :dggs .
@@ -130,13 +137,16 @@
 #################################################################
 
 :time a owl:DatatypeProperty, qb:DimensionProperty ;
-    rdfs:range xsd:dateTime .
+    rdfs:range xsd:dateTime ;
+    qb:concept sdmx-concept:timePeriod .
     
 :satellite a owl:ObjectProperty, qb:AttributeProperty ;
-    rdfs:range ssn:Platform .
+    rdfs:range ssn:Platform ;
+    qb:concept sdmx-concept:collMethod .
     
 :instrument a owl:ObjectProperty, qb:AttributeProperty ;
-    rdfs:range ssn:Sensor .
+    rdfs:range ssn:Sensor ;
+    qb:concept sdmx-concept:collMethod .
     
 :band a owl:DatatypeProperty, qb:AttributeProperty ;
     rdfs:range xsd:integer .
@@ -145,13 +155,17 @@
     rdfs:range xsd:string .
     
 :dggsCell a owl:DatatypeProperty, qb:DimensionProperty ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    qb:concept sdmx-concept:refArea .
 
 :dggsLevelSquare a owl:DatatypeProperty, qb:DimensionProperty ;
     rdfs:range xsd:integer .
     
 :dggsLevelPixel a owl:DatatypeProperty, qb:DimensionProperty ;
     rdfs:range xsd:integer .
+    
+:dataValue a led:imageData ;
+    qb:concept :reflectance .
 
 #################################################################
 #        Observations
@@ -163,7 +177,7 @@
     led:lat "91.6667";
     led:long "40.0270";
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
-    led:imageData "http://www.example.org/led-example-image-R000" ;
+    :dataValue "http://www.example.org/led-example-image-R000" ;
     led:resolution "0.9"^^led:pixelsPerDegree ;
     :dggsCell "R000" ;
     :dggsLevelSquare "3" ;
@@ -176,7 +190,7 @@
     led:lat "90.5556";
     led:long "41.2471";
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
-    led:imageData "http://www.example.org/led-example-image-R0000" ;
+    :dataValue "http://www.example.org/led-example-image-R0000" ;
     led:resolution "2.7"^^led:pixelsPerDegree ;
     :dggsCell "R0000" ;
     :dggsLevelSquare "4" ;
@@ -190,7 +204,7 @@
     led:lat "90.5556";
     led:long "41.2444";
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
-    led:imageData "15"^^xsd:integer ;
+    :dataValue "15"^^xsd:integer ;
     led:resolution "2.7"^^led:pixelsPerDegree ;
     :dggsCell "R00004" ;
     :dggsLevelSquare "5" ;
