@@ -8,8 +8,10 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sweet: <http://sweet.jpl.nasa.gov/2.3/prop.owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix sdmx-dimension:  <http://purl.org/linked-data/sdmx/2009/dimension#> .
 
 <http://www.example.org/ANU-LED-example> a owl:Ontology ;
@@ -35,12 +37,31 @@
 #        Dataset
 #################################################################
 
-:exampleDataset a owl:NamedIndividual , qb:DataSet ;
+:exampleDataset a owl:NamedIndividual , qb:DataSet, prov:Entity ;
 	qb:structure :exampleStructure ;
     :instrument :OLI ;
     :satellite :landsat-8 ;
     :band "4" ;
-    :dggs "rHEALPix WGS84 Ellipsoid" .
+    :dggs "rHEALPix WGS84 Ellipsoid" ;
+    prov:wasGeneratedBy :ANU-led-resampling ;
+    prov:wasDerivedFrom :AGDC
+    
+#################################################################
+#        PROV-O description
+#################################################################
+
+:ANU-led-resampling a prov:Activity ;
+    prov:wasAssociatedWith :DmitryBrizhinev ;
+    prov:used :AGDC .
+    
+:DmitryBrizhinev a prov:Agent, prov:Person ;
+    foaf:givenName "Dmitry"^^xsd:string ;
+    foaf:mbox      <mailto:dmitry.brizhinev@anu.edu.au> .
+    
+:AGDC a prov:Entity ;
+    prov:wasAssociatedWith :GeoscienceAustralia .
+    
+:GeoscienceAustralia a prov:Agent, prov:Organization .
 
 #################################################################
 #        Dimensions and attributes
