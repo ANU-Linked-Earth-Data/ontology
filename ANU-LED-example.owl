@@ -17,6 +17,7 @@
 @prefix cci-platform: <http://vocab-test.ceda.ac.uk/collection/cci/platform/> .
 @prefix cci-sensor: <http://vocab-test.ceda.ac.uk/collection/cci/sensor/> .
 @prefix cci-dataType: <http://vocab-test.ceda.ac.uk/collection/cci/dataType/> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
 
 <http://www.example.org/ANU-LED-example> a owl:Ontology ;
 	owl:imports <http://www.example.org/ANU-LED> .
@@ -51,7 +52,7 @@
     :band "4" ;
     :dggs "rHEALPix WGS84 Ellipsoid" ;
     prov:wasGeneratedBy :ANU-led-resampling ;
-    prov:wasDerivedFrom :AGDC
+    prov:wasDerivedFrom :AGDC .
     
 #################################################################
 #        PROV-O description
@@ -65,8 +66,12 @@
     foaf:givenName "Dmitry"^^xsd:string ;
     foaf:mbox      <mailto:dmitry.brizhinev@anu.edu.au> .
     
-:AGDC a prov:Entity ;
-    prov:wasAssociatedWith :GeoscienceAustralia .
+:AGDC a prov:Collection ;
+    prov:wasAssociatedWith :GeoscienceAustralia ;
+    prov:hadMember :example-tile .
+    
+:example-tile a prov:Entity, vcard:Individual ;
+    vcard:hasURL [vcard:url "http://dapds00.nci.org.au/thredds/catalog/rs0/tiles/EPSG4326_1deg_0.00025pixel/LS8_OLI_TIRS/148_-035/2016/catalog.html?dataset=rs0/tiles/EPSG4326_1deg_0.00025pixel/LS8_OLI_TIRS/148_-035/2016/LS8_OLI_TIRS_FC_148_-035_2016-01-12T23-55-57.tif"] .
     
 :GeoscienceAustralia a prov:Agent, prov:Organization .
 
@@ -182,7 +187,8 @@
     :dggsCell "R000" ;
     :dggsLevelSquare "3" ;
     :dggsLevelPixel "4" ;
-    led:bounds  "POLYGON((90 41.87, 93.33 41.87, 93.33 38.18, 90 38.18, 90 41.87))"^^ogc:wktLiteral .
+    led:bounds  "POLYGON((90 41.87, 93.33 41.87, 93.33 38.18, 90 38.18, 90 41.87))"^^ogc:wktLiteral ;
+    prov:wasDerivedFrom :example-tile .
     
 :s2 a led:GridSquare ;
     qb:dataSet :exampleDataset ;
@@ -196,6 +202,7 @@
     :dggsLevelSquare "4" ;
     :dggsLevelPixel "5" ;
     led:bounds  "POLYGON((90 41.87, 91.11 41.87, 91.11 40.62, 90 40.62, 90 41.87))"^^ogc:wktLiteral ;
+    prov:wasDerivedFrom :example-tile ;
     led:containedInSquare :s1 .
     
 :p1 a led:Pixel ;
@@ -210,6 +217,7 @@
     :dggsLevelSquare "5" ;
     :dggsLevelPixel "5" ;
     led:bounds  "POLYGON((90.37 41.45, 90.74 41.45, 90.74 41.04, 90.37 41.04, 90.37 41.45))"^^ogc:wktLiteral ;
+    prov:wasDerivedFrom :example-tile ;
     led:containedInSquare :s1 ;
     led:containedInSquare :s2 .
     
