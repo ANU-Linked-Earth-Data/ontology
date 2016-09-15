@@ -51,6 +51,7 @@
     :instrument :OLI ;
     :satellite :landsat-8 ;
     :band "4" ;
+    led:coverageDomain "POLYGON((90 41.87, 93.33 41.87, 93.33 38.18, 90 38.18, 90 41.87))"^^ogc:wktLiteral ;
     prov:wasGeneratedBy :ANU-led-resampling ;
     prov:wasDerivedFrom :AGDC .
     
@@ -80,7 +81,8 @@
 #################################################################
 
 :exampleStructure a qb4st:SpatialDSD ;
-	qb:component :latitudeComponent ,
+	qb:component :domainComponent ,
+                 :latitudeComponent ,
                  :longitudeComponent ,
                  :timeComponent ,
                  :satelliteComponent ,
@@ -93,9 +95,12 @@
                  :resolutionComponent ,
                  :boundsComponent .
     
+:domainComponent a qb4st:SpatialComponentSpecification ;
+	qb:attribute led:coverageDomain .
+
 :latitudeComponent a qb4st:SpatialComponentSpecification ;
 	qb:dimension led:lat .
-    
+
 :longitudeComponent a qb4st:SpatialComponentSpecification ;
 	qb:dimension led:long .
 
