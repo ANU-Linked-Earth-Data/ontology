@@ -1,4 +1,5 @@
-@prefix : <http://www.example.org/ANU-LED#> .
+@prefix : <https://github.com/ANU-Linked-Earth-Data/ontology/raw/master/ANU-LED.owl#> .
+@prefix qb4st: <https://github.com/rob-metalinkage/sdw/raw/gh-pages/coverages/qb4st/qb4st.ttl#> .
 @prefix ogc: <http://www.opengis.net/ont/geosparql#> .
 @prefix qb: <http://purl.org/linked-data/cube#> .
 @prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
@@ -28,34 +29,27 @@
 	owl:inverseOf :containsSquare ;
 	rdfs:domain :GridSquare ;
 	rdfs:range :GridSquare .
-# 
-# http://www.example.org/ANU-LED#containsSquare
 
 :containsSquare a owl:ObjectProperty ;
     rdfs:subPropertyOf ogc:sfContains ;
 	rdfs:domain :GridSquare ;
 	rdfs:range :GridSquare .
-# 
-# http://www.example.org/ANU-LED#bounds
 
-:bounds a owl:DatatypeProperty, owl:FunctionalProperty, qb:AttributeProperty ;
+:bounds a qb:AttributeProperty, qb4st:SpatialProperty ;
     rdfs:subPropertyOf ogc:asWKT ;
     rdfs:domain :GridSquare ;
+    qb4st:crs <http://www.opengis.net/def/crs/EPSG/0/4326> ;
     qb:concept sdmx-concept:refArea .
-
-# 
-# http://www.example.org/ANU-LED#location
-
-:location a owl:ObjectProperty, qb:DimensionProperty ;
-	rdfs:subPropertyOf geo:location .
     
-:lat a owl:ObjectProperty, qb:DimensionProperty ;
-	rdfs:subPropertyOf geo:lat .
+:lat a qb4st:latitudeDim ;
+	rdfs:subPropertyOf geo:lat ;
+    qb4st:crs <http://www.opengis.net/def/crs/EPSG/0/4326> .
     
-:long a owl:ObjectProperty, qb:DimensionProperty ;
-	rdfs:subPropertyOf geo:long .
+:long a qb4st:longitudeDim ;
+	rdfs:subPropertyOf geo:long ;
+    qb4st:crs <http://www.opengis.net/def/crs/EPSG/0/4326> .
     
-:imageData a owl:DatatypeProperty, qb:MeasureProperty ;
+:imageData a qb:MeasureProperty ;
 	rdfs:range [owl:unionOf(xsd:anyURI xsd:integer)] ;
 	qb:concept sdmx-concept:obsValue .
 
@@ -72,7 +66,7 @@
 :pixelsPerDegree rdf:type rdfs:Datatype ;
     owl:equivalentClass xsd:double .
 
-:resolution a owl:DatatypeProperty, owl:FunctionalProperty, qb:AttributeProperty ;
+:resolution a qb:AttributeProperty ;
 	rdfs:range :pixelsPerDegree .
 # 
 # 

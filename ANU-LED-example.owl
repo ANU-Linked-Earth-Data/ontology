@@ -1,8 +1,9 @@
-@prefix : <http://www.example.org/ANU-LED-example#> .
+@prefix : <https://github.com/ANU-Linked-Earth-Data/ontology/raw/master/ANU-LED-example.owl#> .
+@prefix qb4st: <https://github.com/rob-metalinkage/sdw/raw/gh-pages/coverages/qb4st/qb4st.ttl#> .
 @prefix ogc: <http://www.opengis.net/ont/geosparql#> .
 @prefix qb: <http://purl.org/linked-data/cube#> .
 @prefix ssn: <http://purl.oclc.org/NET/ssnx/ssn#> .
-@prefix led: <http://www.example.org/ANU-LED#> .
+@prefix led: <https://github.com/ANU-Linked-Earth-Data/ontology/raw/master/ANU-LED.owl#> .
 @prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -25,19 +26,19 @@
 #################################################################
 #        SSN description
 #################################################################
-:landsat-8 a owl:NamedIndividual, ssn:Platform ;
+:landsat-8 a ssn:Platform ;
     owl:sameAs cci-platform:plat_landsat_8 .
 
-:OLI a owl:NamedIndividual, ssn:Sensor ;
+:OLI a ssn:Sensor ;
     ssn:onPlatform :landsat-8 ;
     ssn:hasMeasurementCapability :oli-capability ;
     ssn:observes :reflectance ;
     owl:sameAs cci-sensor:sens_oli .
     
-:oli-capability a owl:NamedIndividual, ssn:MeasurementCapability ;
+:oli-capability a ssn:MeasurementCapability ;
     ssn:forProperty :reflectance .
 
-:reflectance a owl:NamedIndividual, ssn:Property, skos:Concept ;
+:reflectance a ssn:Property, skos:Concept ;
     owl:sameAs sweet:Reflectance ;
     owl:sameAs cci-dataType:dtype_sr .
 
@@ -45,12 +46,11 @@
 #        Dataset
 #################################################################
 
-:exampleDataset a owl:NamedIndividual , qb:DataSet, prov:Entity ;
+:exampleDataset a qb:DataSet, prov:Entity ;
 	qb:structure :exampleStructure ;
     :instrument :OLI ;
     :satellite :landsat-8 ;
     :band "4" ;
-    :dggs "rHEALPix WGS84 Ellipsoid" ;
     prov:wasGeneratedBy :ANU-led-resampling ;
     prov:wasDerivedFrom :AGDC .
     
@@ -79,94 +79,84 @@
 #        Dimensions and attributes
 #################################################################
 
-:exampleStructure a owl:NamedIndividual , qb:DataStructureDefinition ;
-	qb:component :positionComponent ,
-                 :latitudeComponent ,
+:exampleStructure a qb4st:SpatialDSD ;
+	qb:component :latitudeComponent ,
                  :longitudeComponent ,
                  :timeComponent ,
                  :satelliteComponent ,
                  :instrumentComponent ,
                  :bandComponent ,
                  :dataComponent ,
-                 :dggsComponent ,
                  :dggsCellComponent ,
                  :dggsLevelSquareComponent ,
                  :dggsLevelPixelComponent ,
                  :resolutionComponent ,
                  :boundsComponent .
-
-:positionComponent a owl:NamedIndividual , qb:ComponentSpecification ;
-	qb:dimension led:location .
     
-:latitudeComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:latitudeComponent a qb4st:SpatialComponentSpecification ;
 	qb:dimension led:lat .
     
-:longitudeComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:longitudeComponent a qb4st:SpatialComponentSpecification ;
 	qb:dimension led:long .
 
-:timeComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:timeComponent a qb:ComponentSpecification ;
 	qb:dimension :time .   
     
-:satelliteComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:satelliteComponent a qb:ComponentSpecification ;
 	qb:attribute :satellite .   
     
-:instrumentComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:instrumentComponent a qb:ComponentSpecification ;
 	qb:attribute :instrument .
     
-:bandComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:bandComponent a qb:ComponentSpecification ;
 	qb:attribute :band .
     
-:dataComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:dataComponent a qb:ComponentSpecification ;
 	qb:measure :dataValue .
-    
-:dggsComponent a owl:NamedIndividual , qb:ComponentSpecification ;
-	qb:attribute :dggs .
 
-:dggsCellComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:dggsCellComponent a qb4st:SpatialComponentSpecification ;
 	qb:dimension :dggsCell .
     
-:dggsLevelSquareComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:dggsLevelSquareComponent a qb:ComponentSpecification ;
 	qb:dimension :dggsLevelSquare .
     
-:dggsLevelPixelComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:dggsLevelPixelComponent a qb:ComponentSpecification ;
 	qb:dimension :dggsLevelPixel .
     
-:resolutionComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:resolutionComponent a qb:ComponentSpecification ;
 	qb:attribute led:resolution .
     
-:boundsComponent a owl:NamedIndividual , qb:ComponentSpecification ;
+:boundsComponent a qb4st:SpatialComponentSpecification ;
 	qb:attribute led:bounds .
 
 #################################################################
 #        New properties for the attributes
 #################################################################
 
-:time a owl:DatatypeProperty, qb:DimensionProperty ;
+:time a qb:DimensionProperty ;
     rdfs:range xsd:dateTime ;
     qb:concept sdmx-concept:timePeriod .
     
-:satellite a owl:ObjectProperty, qb:AttributeProperty ;
+:satellite a qb:AttributeProperty ;
     rdfs:range ssn:Platform ;
     qb:concept sdmx-concept:collMethod .
     
-:instrument a owl:ObjectProperty, qb:AttributeProperty ;
+:instrument a qb:AttributeProperty ;
     rdfs:range ssn:Sensor ;
     qb:concept sdmx-concept:collMethod .
     
-:band a owl:DatatypeProperty, qb:AttributeProperty ;
+:band a qb:AttributeProperty ;
     rdfs:range xsd:integer .
-
-:dggs a owl:DatatypeProperty, qb:AttributeProperty ;
-    rdfs:range xsd:string .
     
-:dggsCell a owl:DatatypeProperty, qb:DimensionProperty ;
+:dggsCell a qb4st:SpatialDimension ;
+    qb4st:crs "rHEALPix WGS84 Ellipsoid" ;
     rdfs:range xsd:string ;
     qb:concept sdmx-concept:refArea .
 
-:dggsLevelSquare a owl:DatatypeProperty, qb:DimensionProperty ;
+:dggsLevelSquare a qb:DimensionProperty ;
     rdfs:range xsd:integer .
     
-:dggsLevelPixel a owl:DatatypeProperty, qb:DimensionProperty ;
+:dggsLevelPixel a qb:DimensionProperty ;
     rdfs:range xsd:integer .
     
 :dataValue a led:imageData ;
@@ -178,7 +168,6 @@
 
 :s1 a led:GridSquare ;
     qb:dataSet :exampleDataset ;
-    led:location [geo:lat "91.6667"; geo:long "40.0270"] ;
     led:lat "91.6667";
     led:long "40.0270";
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
@@ -192,7 +181,6 @@
     
 :s2 a led:GridSquare ;
     qb:dataSet :exampleDataset ;
-    led:location [geo:lat "90.5556"; geo:long "41.2471"] ;
     led:lat "90.5556";
     led:long "41.2471";
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
@@ -207,7 +195,6 @@
     
 :p1 a led:Pixel ;
     qb:dataSet :exampleDataset ;
-    led:location [geo:lat "90.5556"; geo:long "41.2444"] ;
     led:lat "90.5556";
     led:long "41.2444";
     :time "2001-10-26T21:32:52"^^xsd:dateTime ;
