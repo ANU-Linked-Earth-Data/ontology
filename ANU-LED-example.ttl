@@ -8,6 +8,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sweet: <http://sweet.jpl.nasa.gov/2.3/prop.owl#> .
@@ -33,9 +34,26 @@
     :instrument :OLI ;
     :satellite :landsat-8 ;
     :band "4" ;
-    :coverageDomain "POLYGON((90 41.87, 93.33 41.87, 93.33 38.18, 90 38.18, 90 41.87))"^^ogc:wktLiteral ;
+    :coverageSpatialDomain "POLYGON((90 41.87, 93.33 41.87, 93.33 38.18, 90 38.18, 90 41.87))"^^ogc:wktLiteral ;
+    :coverageTemporalDomain :timeDomain ;
     prov:wasGeneratedBy :ANU-led-resampling ;
     prov:wasDerivedFrom :AGDC .
+
+###################################################################
+# #
+# #       OWL-Time description
+# #
+###################################################################
+
+:timeDomain a time:Interval ;
+    time:hasBeginning :timeBeginning ;
+    time:hasEnd :timeEnd .
+    
+:timeBeginning a time:Instant ;
+    time:inXSDDateTime "2001-10-26T21:32:52"^^xsd:dateTime .
+
+:timeEnd a time:Instant ;
+	time:inXSDDateTime "2001-10-26T21:32:52"^^xsd:dateTime .
 
 ###################################################################
 # #
@@ -89,7 +107,8 @@
 # #################################################################
 
 :exampleStructure a qb4st:SpatialDSD ;
-    qb:component :domainComponent ,
+    qb:component :spatialDomainComponent ,
+                 :temporalDomainComponent ,
                  :latitudeComponent ,
                  :longitudeComponent ,
                  :timeComponent ,
@@ -103,8 +122,11 @@
                  :resolutionComponent ,
                  :boundsComponent .
 
-:domainComponent a qb4st:SpatialComponentSpecification ;
-    qb:attribute :coverageDomain .
+:spatialDomainComponent a qb4st:SpatialComponentSpecification ;
+    qb:attribute :coverageSpatialDomain .
+    
+:temporalDomainComponent a qb:ComponentSpecification ;
+    qb:attribute :coverageTemporalDomain .
 
 :latitudeComponent a qb4st:SpatialComponentSpecification ;
     qb:dimension :lat .
@@ -148,8 +170,12 @@
 # #
 # #################################################################
 
-:coverageDomain a qb:AttributeProperty, qb4st:SpatialProperty ;
+:coverageSpatialDomain a qb:AttributeProperty, qb4st:SpatialProperty ;
     rdfs:subPropertyOf :bounds .
+    
+:coverageTemporalDomain a qb:AttributeProperty ;
+    rdfs:range time:DateTimeInterval ;
+    qb:concept sdmx-concept:timePeriod .
 
 :lat a qb4st:latitudeDim ;
     rdfs:subPropertyOf geo:lat ;
